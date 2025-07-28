@@ -1,3 +1,4 @@
+import { Link } from 'expo-router';
 import {
 	KeyboardAvoidingView,
 	Platform,
@@ -16,11 +17,13 @@ export default function SignInScreen() {
 		>
 			<View style={styles.content}>
 				<View style={styles.card}>
-					<Text style={styles.title}>HaroldFitApp</Text>
+					<Text style={styles.title}>
+						HaroldFit<Text style={styles.colorSecondary}>App</Text>
+					</Text>
 
 					<Text style={styles.label}>Username</Text>
 					<TextInput
-						style={styles.input}
+						style={[styles.input, { marginBottom: 10 }]}
 						placeholder="Enter your username"
 						autoCapitalize="none"
 						autoFocus
@@ -34,13 +37,20 @@ export default function SignInScreen() {
 						autoCapitalize="none"
 					/>
 
+					<TouchableOpacity style={styles.forgotPassword}>
+						<Text style={styles.forgotPasswordText}>Forgot your Password?</Text>
+					</TouchableOpacity>
+
 					<TouchableOpacity style={styles.button}>
 						<Text style={styles.buttonText}>Login</Text>
 					</TouchableOpacity>
 
-					<TouchableOpacity style={styles.forgotPassword}>
-						<Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-					</TouchableOpacity>
+					<Text style={styles.signUpText}>
+						Don&apos;t have an account?{' '}
+						<Link href="/create-account" style={styles.colorSecondary}>
+							Sign Up
+						</Link>
+					</Text>
 				</View>
 			</View>
 		</KeyboardAvoidingView>
@@ -62,7 +72,7 @@ const styles = StyleSheet.create({
 		marginBottom: 50,
 		textAlign: 'center',
 		fontWeight: 'bold',
-		color: 'orange'
+		color: '#FFA500'
 	},
 	card: {
 		padding: 20,
@@ -83,12 +93,11 @@ const styles = StyleSheet.create({
 		height: 40,
 		borderWidth: 1,
 		width: '100%',
-		borderRadius: 5,
-		marginBottom: 10
+		borderRadius: 5
 	},
 	button: {
 		width: '100%',
-		backgroundColor: 'orange',
+		backgroundColor: '#800080',
 		height: 50,
 		borderRadius: 5,
 		alignItems: 'center',
@@ -100,11 +109,22 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold'
 	},
 	forgotPassword: {
-		marginTop: 10,
+		marginTop: 2,
+		marginBottom: 20,
 		alignItems: 'flex-end'
 	},
 	forgotPasswordText: {
-		color: 'orange',
+		color: '#FFA500',
 		fontSize: 14
+	},
+	signUpText: {
+		marginTop: 20,
+		textAlign: 'center'
+	},
+	colorPrimary: {
+		color: '#FFA500'
+	},
+	colorSecondary: {
+		color: '#800080'
 	}
 });
