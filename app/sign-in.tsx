@@ -22,6 +22,7 @@ export default function SignInScreen() {
 					</Text>
 
 					<Text style={styles.label}>Username</Text>
+
 					<TextInput
 						style={[styles.input, { marginBottom: 10 }]}
 						placeholder="Enter your username"
@@ -30,6 +31,7 @@ export default function SignInScreen() {
 					/>
 
 					<Text style={styles.label}>Password</Text>
+
 					<TextInput
 						style={styles.input}
 						placeholder="Enter your password"
@@ -57,6 +59,13 @@ export default function SignInScreen() {
 	);
 }
 
+const COLORS = {
+	primary: '#FFA500',
+	secondary: '#800080',
+	white: '#FFFFFF',
+	black: '#000'
+};
+
 const styles = StyleSheet.create({
 	container: {
 		flex: 1
@@ -72,13 +81,13 @@ const styles = StyleSheet.create({
 		marginBottom: 50,
 		textAlign: 'center',
 		fontWeight: 'bold',
-		color: '#FFA500'
+		color: COLORS.primary
 	},
 	card: {
 		padding: 20,
 		borderRadius: 10,
-		backgroundColor: 'white',
-		shadowColor: '#000',
+		backgroundColor: COLORS.white,
+		shadowColor: COLORS.black,
 		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.25,
 		shadowRadius: 3.84,
@@ -97,14 +106,14 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		width: '100%',
-		backgroundColor: '#800080',
+		backgroundColor: COLORS.secondary,
 		height: 50,
 		borderRadius: 5,
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
 	buttonText: {
-		color: 'white',
+		color: COLORS.white,
 		fontSize: 16,
 		fontWeight: 'bold'
 	},
@@ -114,7 +123,7 @@ const styles = StyleSheet.create({
 		alignItems: 'flex-end'
 	},
 	forgotPasswordText: {
-		color: '#FFA500',
+		color: COLORS.primary,
 		fontSize: 14
 	},
 	signUpText: {
@@ -122,9 +131,9 @@ const styles = StyleSheet.create({
 		textAlign: 'center'
 	},
 	colorPrimary: {
-		color: '#FFA500'
+		color: COLORS.primary
 	},
 	colorSecondary: {
-		color: '#800080'
+		color: COLORS.secondary
 	}
 });
