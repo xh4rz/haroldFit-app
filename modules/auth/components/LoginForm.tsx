@@ -9,7 +9,7 @@ import {
 	View
 } from 'react-native';
 
-export default function SignInScreen() {
+export default function LoginForm() {
 	return (
 		<KeyboardAvoidingView
 			style={styles.container}
@@ -49,7 +49,7 @@ export default function SignInScreen() {
 
 					<Text style={styles.signUpText}>
 						Don&apos;t have an account?{' '}
-						<Link href="/create-account" style={styles.colorSecondary}>
+						<Link href="/auth/signup" style={styles.colorSecondary}>
 							Sign Up
 						</Link>
 					</Text>
