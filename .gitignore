@@ -40,3 +40,6 @@ yarn-error.*
 android/
 
 app-example
+
+
+.env

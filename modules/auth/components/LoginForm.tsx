@@ -1,55 +1,121 @@
-import { Link } from 'expo-router';
+import { useCallback, useState } from 'react';
+import { Link, useFocusEffect } from 'expo-router';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
+	Keyboard,
 	KeyboardAvoidingView,
 	Platform,
-	StyleSheet,
 	Text,
-	TextInput,
 	TouchableOpacity,
 	View
 } from 'react-native';
+import { z } from 'zod';
+import { loginFormSchema } from '../validation/loginFormSchema';
+import { useAuthStore } from '../store/useAuthStore';
+import { useTheme } from '../../../context/ThemeContext';
+import { Input } from '@/components/Input';
+
+type LoginFormData = z.infer<typeof loginFormSchema>;
 
 export default function LoginForm() {
+	const { login } = useAuthStore();
+	const { theme } = useTheme();
+	const [loading, setLoading] = useState(false);
+
+	const {
+		control,
+		handleSubmit,
+		formState: { errors }
+	} = useForm<LoginFormData>({
+		resolver: zodResolver(loginFormSchema),
+		mode: 'onChange',
+		defaultValues: {
+			email: '',
+			password: ''
+		}
+	});
+
+	const onLogin = async (data: LoginFormData) => {
+		setLoading(true);
+		try {
+			await login(data.email, data.password);
+		} catch (error) {
+			const errorObject = JSON.parse(error.message);
+			console.log({ errorObject });
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useFocusEffect(
+		useCallback(() => {
+			Keyboard.dismiss();
+			const timer = setTimeout(() => {}, 100);
+			return () => clearTimeout(timer);
+		}, [])
+	);
+
 	return (
 		<KeyboardAvoidingView
-			style={styles.container}
+			style={{ flex: 1 }}
+			className={`${theme === 'dark' ? 'bg-zinc-900' : 'bg-zinc-100'}`}
 			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 		>
-			<View style={styles.content}>
-				<View style={styles.card}>
-					<Text style={styles.title}>
-						HaroldFit<Text style={styles.colorSecondary}>App</Text>
+			<View className="flex-1 justify-center p-1 mx-2.5">
+				<View
+					className={`p-5 rounded-2xl shadow-sm shadow-black w-full ${
+						theme === 'dark' ? 'bg-zinc-800' : 'bg-white'
+					}`}
+				>
+					<Text className="text-4xl mb-12 text-center font-bold text-primary">
+						HaroldFit
+						<Text className="text-secondary">App</Text>
 					</Text>
 
-					<Text style={styles.label}>Username</Text>
-
-					<TextInput
-						style={[styles.input, { marginBottom: 10 }]}
-						placeholder="Enter your username"
-						autoCapitalize="none"
+					<Input
 						autoFocus
-					/>
-
-					<Text style={styles.label}>Password</Text>
-
-					<TextInput
-						style={styles.input}
-						placeholder="Enter your password"
-						secureTextEntry={true}
+						required
 						autoCapitalize="none"
+						keyboardType="email-address"
+						control={control}
+						name="email"
+						label="Email"
+						placeholder="Enter your email"
+						error={errors.email}
 					/>
 
-					<TouchableOpacity style={styles.forgotPassword}>
-						<Text style={styles.forgotPasswordText}>Forgot your Password?</Text>
+					<Input
+						required
+						control={control}
+						autoCapitalize="none"
+						name="password"
+						label="Password"
+						placeholder="Enter your password"
+						error={errors.password}
+						secureTextEntry={true}
+					/>
+
+					<TouchableOpacity className="items-end">
+						<Text className="text-sm text-center text-primary">
+							Forgot your Password?
+						</Text>
 					</TouchableOpacity>
 
-					<TouchableOpacity style={styles.button}>
-						<Text style={styles.buttonText}>Login</Text>
+					<TouchableOpacity
+						className="w-full h-12 rounded-lg items-center justify-center mt-5 bg-secondary"
+						onPress={handleSubmit(onLogin)}
+					>
+						<Text className="text-white text-base font-bold">Login</Text>
 					</TouchableOpacity>
 
-					<Text style={styles.signUpText}>
+					<Text
+						className={`mt-5 text-center ${
+							theme === 'dark' ? 'text-white' : 'text-black'
+						}`}
+					>
 						Don&apos;t have an account?{' '}
-						<Link href="/auth/signup" style={styles.colorSecondary}>
+						<Link href="/auth/signup" className="font-bold text-secondary">
 							Sign Up
 						</Link>
 					</Text>
@@ -58,82 +124,3 @@ export default function LoginForm() {
 		</KeyboardAvoidingView>
 	);
 }
-
-const COLORS = {
-	primary: '#FFA500',
-	secondary: '#800080',
-	white: '#FFFFFF',
-	black: '#000'
-};
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1
-	},
-	content: {
-		flex: 1,
-		justifyContent: 'center',
-		padding: 4,
-		marginHorizontal: 10
-	},
-	title: {
-		fontSize: 40,
-		marginBottom: 50,
-		textAlign: 'center',
-		fontWeight: 'bold',
-		color: COLORS.primary
-	},
-	card: {
-		padding: 20,
-		borderRadius: 10,
-		backgroundColor: COLORS.white,
-		shadowColor: COLORS.black,
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.25,
-		shadowRadius: 3.84,
-		elevation: 5
-	},
-	label: {
-		marginBottom: 2,
-		fontSize: 16,
-		fontWeight: 'bold'
-	},
-	input: {
-		height: 40,
-		borderWidth: 1,
-		width: '100%',
-		borderRadius: 5
-	},
-	button: {
-		width: '100%',
-		backgroundColor: COLORS.secondary,
-		height: 50,
-		borderRadius: 5,
-		alignItems: 'center',
-		justifyContent: 'center'
-	},
-	buttonText: {
-		color: COLORS.white,
-		fontSize: 16,
-		fontWeight: 'bold'
-	},
-	forgotPassword: {
-		marginTop: 2,
-		marginBottom: 20,
-		alignItems: 'flex-end'
-	},
-	forgotPasswordText: {
-		color: COLORS.primary,
-		fontSize: 14
-	},
-	signUpText: {
-		marginTop: 20,
-		textAlign: 'center'
-	},
-	colorPrimary: {
-		color: COLORS.primary
-	},
-	colorSecondary: {
-		color: COLORS.secondary
-	}
-});
