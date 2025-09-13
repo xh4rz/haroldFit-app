@@ -1,2 +1,5 @@
-export { AppContextProvider } from './AppContext';
-export { reactQueryClient, ReactQueryProvider } from './ReactQueryContext';
+export {
+	reactQueryClient,
+	ReactQueryContextProvider
+} from './ReactQueryContext';
+export { ThemeContextProvider } from './ThemeContext';

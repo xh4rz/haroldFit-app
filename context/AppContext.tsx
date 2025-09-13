@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { ReactQueryProvider } from './ReactQueryContext';
+import { ReactQueryContextProvider, ThemeContextProvider } from './';
 
 interface AppContextProps {
 	children: ReactNode;
@@ -7,12 +7,8 @@ interface AppContextProps {
 
 export function AppContextProvider({ children }: AppContextProps) {
 	return (
-		<ReactQueryProvider>
-			{/* <AuthProvider> */}
-			{/* <ThemeProvider> */}
-			{children}
-			{/* </ThemeProvider> */}
-			{/* </AuthProvider> */}
-		</ReactQueryProvider>
+		<ReactQueryContextProvider>
+			<ThemeContextProvider>{children}</ThemeContextProvider>
+		</ReactQueryContextProvider>
 	);
 }

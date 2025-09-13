@@ -28,7 +28,7 @@ const reactQueryClient = new QueryClient({
 	}
 });
 
-export function ReactQueryProvider({ children }: QueryProviderProps) {
+export function ReactQueryContextProvider({ children }: QueryProviderProps) {
 	return (
 		<QueryClientProvider client={reactQueryClient}>
 			{children}
