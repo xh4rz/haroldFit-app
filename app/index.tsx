@@ -1,108 +1,40 @@
 import { router } from 'expo-router';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 
 export default function WelcomeScreen() {
 	return (
-		<View style={styles.container}>
-			<View style={styles.content}>
-				<Text style={styles.welcomeText}>Welcome to</Text>
-
-				<Text style={styles.title}>
-					HaroldFit<Text style={styles.colorSecondary}>App</Text>
+		<View className="flex-1 bg-theme">
+			<View className="flex-1 justify-center items-center px-5">
+				<Text className="text-3xl mb-2.5 text-center font-medium text-primary-theme">
+					Welcome to
 				</Text>
 
-				<Text style={styles.subtitle}>
+				<Text className="text-4xl mb-12 text-center font-bold text-primary">
+					HaroldFit<Text className="text-secondary">App</Text>
+				</Text>
+
+				<Text className="text-base text-center mb-10 leading-6 text-primary-theme">
 					Discover everything our app has to offer
 				</Text>
 
-				<View style={styles.buttonContainer}>
+				<View className="w-full gap-4">
 					<Pressable
-						style={styles.primaryButton}
+						className="bg-secondary py-4 px-8 rounded-lg items-center"
 						onPress={() => router.push('/auth/login')}
 					>
-						<Text style={styles.primaryButtonText}>Login</Text>
+						<Text className="text-white text-base font-semibold">Login</Text>
 					</Pressable>
 
 					<Pressable
-						style={styles.secondaryButton}
+						className="border py-4 px-8 rounded-lg items-center bg-transparent border-primary"
 						onPress={() => router.push('/auth/signup')}
 					>
-						<Text style={styles.secondaryButtonText}>Create Account</Text>
+						<Text className="text-base font-semibold text-primary">
+							Create Account
+						</Text>
 					</Pressable>
 				</View>
 			</View>
 		</View>
 	);
 }
-
-const COLORS = {
-	primary: '#FFA500',
-	secondary: '#800080',
-	white: '#FFFFFF',
-	black: '#000'
-};
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: COLORS.white
-	},
-	content: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		paddingHorizontal: 20
-	},
-	welcomeText: {
-		fontSize: 30,
-		marginBottom: 10,
-		textAlign: 'center',
-		color: COLORS.black
-	},
-	title: {
-		fontSize: 40,
-		marginBottom: 50,
-		textAlign: 'center',
-		fontWeight: 'bold',
-		color: COLORS.primary
-	},
-	colorSecondary: {
-		color: COLORS.secondary
-	},
-	subtitle: {
-		fontSize: 16,
-		color: '#666',
-		textAlign: 'center',
-		marginBottom: 40,
-		lineHeight: 24
-	},
-	buttonContainer: {
-		width: '100%',
-		gap: 16
-	},
-	primaryButton: {
-		backgroundColor: COLORS.secondary,
-		paddingVertical: 16,
-		paddingHorizontal: 32,
-		borderRadius: 8,
-		alignItems: 'center'
-	},
-	primaryButtonText: {
-		color: COLORS.white,
-		fontSize: 16,
-		fontWeight: '600'
-	},
-	secondaryButton: {
-		borderWidth: 1,
-		borderColor: COLORS.primary,
-		paddingVertical: 16,
-		paddingHorizontal: 32,
-		borderRadius: 8,
-		alignItems: 'center'
-	},
-	secondaryButtonText: {
-		color: COLORS.primary,
-		fontSize: 16,
-		fontWeight: '600'
-	}
-});

@@ -8,6 +8,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 
 function RootLayout() {
 	const { isAuthenticated } = useAuthStore();
+
 	return (
 		<React.Fragment>
 			<StatusBar style="auto" />
