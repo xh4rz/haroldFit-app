@@ -14,14 +14,13 @@ import {
 import { z } from 'zod';
 import { useAuthStore } from '../store/useAuthStore';
 import { registerFormSchema } from '../validation/registerFormSchema';
-import { useTheme } from '../../../context/ThemeContext';
 import { Input } from '@/components/Input';
 
 type RegisterFormData = z.infer<typeof registerFormSchema>;
 
 export default function SignupForm() {
 	const { register } = useAuthStore();
-	const { theme } = useTheme();
+
 	const [loading, setLoading] = useState(false);
 
 	const {
@@ -62,15 +61,11 @@ export default function SignupForm() {
 	return (
 		<KeyboardAvoidingView
 			style={{ flex: 1 }}
-			className={`${theme === 'dark' ? 'bg-zinc-900' : 'bg-zinc-100'}`}
+			className="bg-theme"
 			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 		>
 			<View className="flex-1 justify-center p-1 mx-2.5">
-				<View
-					className={`p-5 rounded-2xl shadow-sm shadow-black w-full ${
-						theme === 'dark' ? 'bg-zinc-800' : 'bg-white'
-					}`}
-				>
+				<View className="p-5 rounded-2xl shadow-sm shadow-black w-full bg-card-theme">
 					<Text className="text-4xl mb-12 text-center font-bold text-primary">
 						HaroldFit
 						<Text className="text-secondary">App</Text>
@@ -119,11 +114,7 @@ export default function SignupForm() {
 						</Text>
 					</TouchableOpacity>
 
-					<Text
-						className={`mt-5 text-center ${
-							theme === 'dark' ? 'text-white' : 'text-black'
-						}`}
-					>
+					<Text className="mt-5 text-center text-primary-theme">
 						Already have an account?{' '}
 						<Link href="/auth/login" className="font-bold text-secondary">
 							Login

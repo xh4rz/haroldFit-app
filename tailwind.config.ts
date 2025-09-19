@@ -1,3 +1,5 @@
+import { colors } from './constants/colors';
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: [
@@ -10,11 +12,39 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				// Colores principales
-				primary: '#ffa500',
-				secondary: '#9333ea'
+				primary: colors.primary,
+				secondary: colors.secondary,
+
+				'bg-light': colors.light.background,
+				'bg-dark': colors.dark.background,
+
+				'bg-card-light': colors.light.backgroundCard,
+				'bg-card-dark': colors.dark.backgroundCard,
+
+				'text-primary-light': colors.light.textPrimary,
+				'text-primary-dark': colors.dark.textPrimary,
+
+				'text-secondary-light': colors.light.textSecondary,
+				'text-secondary-dark': colors.dark.textSecondary
 			}
 		}
 	},
-	plugins: []
+	plugins: [
+		function ({ addComponents }) {
+			addComponents({
+				'.bg-theme': {
+					'@apply bg-bg-light dark:bg-bg-dark': {}
+				},
+				'.bg-card-theme': {
+					'@apply bg-bg-card-light dark:bg-bg-card-dark': {}
+				},
+				'.text-primary-theme': {
+					'@apply text-text-primary-light dark:text-text-primary-dark': {}
+				},
+				'.text-secondary-theme': {
+					'@apply text-text-secondary-light dark:text-text-secondary-dark': {}
+				}
+			});
+		}
+	]
 };
