@@ -3,7 +3,7 @@ import { AppContextProvider } from '@/context/AppContext';
 import { useAuthStore } from '@/modules/auth/store/useAuthStore';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import '../global.css';
+import '../../global.css';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
 function RootLayout() {
