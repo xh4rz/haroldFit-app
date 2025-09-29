@@ -4,9 +4,9 @@ import { colors } from './src/constants/colors';
 module.exports = {
 	content: [
 		'./App.tsx',
-		'./app/**/*.{js,jsx,ts,tsx}',
-		'./components/**/*.{js,jsx,ts,tsx}',
-		'./modules/**/*.{js,jsx,ts,tsx}'
+		'./src/app/**/*.{js,jsx,ts,tsx}',
+		'./src/components/**/*.{js,jsx,ts,tsx}',
+		'./src/modules/**/*.{js,jsx,ts,tsx}'
 	],
 	presets: [require('nativewind/preset')],
 	theme: {

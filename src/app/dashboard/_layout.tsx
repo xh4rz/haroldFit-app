@@ -13,7 +13,7 @@ export default function DashboardLayout() {
 				tabBarActiveTintColor: colors.primary,
 				tabBarInactiveTintColor: 'black',
 				tabBarActiveBackgroundColor: colors.secondary,
-				animation: 'fade',
+				animation: 'none',
 				tabBarStyle: {
 					backgroundColor: colors.secondary
 				}
@@ -32,13 +32,28 @@ export default function DashboardLayout() {
 					)
 				}}
 			/>
+
 			<Tabs.Screen
-				name="settings"
+				name="training"
 				options={{
-					title: 'Settings',
+					title: 'Training',
 					tabBarIcon: ({ focused }) => (
 						<AntDesign
-							name="setting"
+							name="bulb1"
+							size={24}
+							color={focused ? colors.primary : 'black'}
+						/>
+					)
+				}}
+			/>
+
+			<Tabs.Screen
+				name="profile"
+				options={{
+					title: 'Profile',
+					tabBarIcon: ({ focused }) => (
+						<AntDesign
+							name="user"
 							size={24}
 							color={focused ? colors.primary : 'black'}
 						/>

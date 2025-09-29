@@ -5,5 +5,5 @@ export const loginFormSchema = z.object({
 	password: z
 		.string()
 		.min(1, 'Password is required')
-		.min(5, 'Password must be at least 5 characters')
+		.min(6, 'Password must be at least 6 characters')
 });

@@ -14,7 +14,7 @@ export interface AuthStoreState {
 }
 
 export const useAuthStore = create<AuthStoreState>()((set, get) => ({
-	isAuthenticated: true,
+	isAuthenticated: false,
 	token: undefined,
 	user: undefined,
 	login: async (email: string, password: string) => {

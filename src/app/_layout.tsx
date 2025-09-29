@@ -2,24 +2,21 @@ import React from 'react';
 import { AppContextProvider } from '@/context/AppContext';
 import { useAuthStore } from '@/modules/auth/store/useAuthStore';
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
 import '../../global.css';
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { colors } from '@/constants/colors';
 
 function RootLayout() {
 	const { isAuthenticated } = useAuthStore();
 
 	return (
 		<React.Fragment>
-			<StatusBar style="auto" />
 			<Stack
 				screenOptions={{
 					headerShown: true,
-					headerStyle: { backgroundColor: '#ffa500' },
-					headerTintColor: '#9333ea',
+					headerStyle: { backgroundColor: colors.primary },
+					headerTintColor: colors.secondary,
 					headerTitleAlign: 'center',
-					animation: 'slide_from_right',
-					headerRight: () => <ThemeToggle />
+					animation: 'slide_from_right'
 				}}
 			>
 				<Stack.Protected guard={!isAuthenticated}>

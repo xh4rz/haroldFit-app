@@ -27,6 +27,7 @@ export const authLogin = async (email: string, password: string) => {
 
 		return returnUserToken(data);
 	} catch (error) {
+		console.error({ error: error.response.data });
 		const objectError = {
 			message: error.response.data.error,
 			status: error.response.status
@@ -43,13 +44,14 @@ export const authRegister = async (
 ) => {
 	try {
 		const { data } = await axiosClient.post<AuthResponse>('/auth/register', {
-			name,
+			fullName: name,
 			email,
 			password
 		});
 
 		return returnUserToken(data);
 	} catch (error) {
+		console.error({ error: error.response.data });
 		const objectError = {
 			message: error.response.data.error,
 			status: error.response.status

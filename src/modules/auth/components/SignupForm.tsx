@@ -13,10 +13,10 @@ import {
 } from 'react-native';
 import { z } from 'zod';
 import { useAuthStore } from '../store/useAuthStore';
-import { registerFormSchema } from '../validation/registerFormSchema';
+import { signupFormSchema } from '../validation/SignupFormSchema';
 import { Input } from '@/components/Input';
 
-type RegisterFormData = z.infer<typeof registerFormSchema>;
+type SignupFormData = z.infer<typeof signupFormSchema>;
 
 export default function SignupForm() {
 	const { register } = useAuthStore();
@@ -27,8 +27,8 @@ export default function SignupForm() {
 		control,
 		handleSubmit,
 		formState: { errors }
-	} = useForm<RegisterFormData>({
-		resolver: zodResolver(registerFormSchema),
+	} = useForm<SignupFormData>({
+		resolver: zodResolver(signupFormSchema),
 		mode: 'onChange',
 		defaultValues: {
 			name: '',
@@ -45,8 +45,7 @@ export default function SignupForm() {
 		}, [])
 	);
 
-	const onRegister = async (data: RegisterFormData) => {
-		console.log({ data });
+	const onRegister = async (data: SignupFormData) => {
 		setLoading(true);
 		try {
 			await register(data.name, data.email, data.password);
