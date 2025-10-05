@@ -1,6 +1,7 @@
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { useAuthStore } from '@/modules/auth/store/useAuthStore';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Link } from 'expo-router';
+import { Button, Text, TouchableOpacity, View } from 'react-native';
 
 export default function ProfileScreen() {
 	const { logout } = useAuthStore();
@@ -18,7 +19,7 @@ export default function ProfileScreen() {
 					<Text className="text-white">Cerrar sesión</Text>
 				</TouchableOpacity>
 
-				<ThemeToggle />
+				{/* <ThemeToggle /> */}
 			</View>
 		</View>
 	);

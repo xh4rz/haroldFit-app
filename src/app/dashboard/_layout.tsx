@@ -18,11 +18,14 @@ export default function DashboardLayout() {
 					backgroundColor: colors.secondary
 				}
 			}}
+			backBehavior="order"
 		>
 			<Tabs.Screen
-				name="index"
+				name="(home)"
 				options={{
 					title: 'Home',
+					headerShown: false,
+					popToTopOnBlur: true,
 					tabBarIcon: ({ focused }) => (
 						<AntDesign
 							name="home"
@@ -37,6 +40,8 @@ export default function DashboardLayout() {
 				name="training"
 				options={{
 					title: 'Training',
+					headerShown: false,
+					popToTopOnBlur: true,
 					tabBarIcon: ({ focused }) => (
 						<AntDesign
 							name="bulb1"
@@ -51,6 +56,8 @@ export default function DashboardLayout() {
 				name="profile"
 				options={{
 					title: 'Profile',
+					headerShown: false,
+					popToTopOnBlur: true,
 					tabBarIcon: ({ focused }) => (
 						<AntDesign
 							name="user"
