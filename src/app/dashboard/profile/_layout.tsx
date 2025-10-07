@@ -36,7 +36,7 @@ export default function ProfileLayout() {
 				}}
 			/>
 			<Stack.Screen
-				name="mode"
+				name="theme"
 				options={{
 					headerShown: true,
 					title: 'Theme',

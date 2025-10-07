@@ -13,7 +13,7 @@ export const colors = {
 
 	// Colores de tema oscuro
 	dark: {
-		background: '#18181b',
+		background: 'black',
 		backgroundCard: '#27272a',
 		textPrimary: '#ffffff',
 		textSecondary: '#cccccc'
