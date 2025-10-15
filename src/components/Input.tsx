@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Controller, Control, FieldError } from 'react-hook-form';
 import { Text, TextInput, TextInputProps, View } from 'react-native';
-import { useTheme } from '../context/ThemeContext';
+import { ThemeContext } from '../context/ThemeContext';
 
 interface InputProps extends Omit<TextInputProps, 'onChangeText' | 'value'> {
 	control: Control<any>;
@@ -21,7 +21,7 @@ export const Input: React.FC<InputProps> = ({
 	required = false,
 	...textInputProps
 }) => {
-	const { theme } = useTheme();
+	const { theme } = useContext(ThemeContext);
 
 	return (
 		<View className="w-full mb-4">

@@ -28,7 +28,7 @@ export default function ProfileLayout() {
 				options={{ headerShown: true, title: 'Profile' }}
 			/>
 			<Stack.Screen
-				name="settings"
+				name="settings/index"
 				options={{
 					headerShown: true,
 					title: 'Settings',
@@ -36,7 +36,7 @@ export default function ProfileLayout() {
 				}}
 			/>
 			<Stack.Screen
-				name="theme"
+				name="settings/theme"
 				options={{
 					headerShown: true,
 					title: 'Theme',

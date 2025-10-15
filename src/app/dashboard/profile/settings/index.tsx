@@ -16,39 +16,39 @@ const sections: SectionListData<{
 	href: Href;
 }>[] = [
 	{
-		title: 'Cuenta',
+		title: 'Account',
 		data: [
 			{
 				id: 1,
-				title: 'Perfil',
+				title: 'Profile',
 				icon: <AntDesign name="user" size={20} color="white" />,
 				href: '/'
 			},
 			{
 				id: 2,
-				title: 'Cuenta',
-				icon: <AntDesign name="user" size={20} color="white" />,
+				title: 'Account',
+				icon: <AntDesign name="profile" size={20} color="white" />,
 				href: '/'
 			}
 		]
 	},
 	{
-		title: 'Apariencia',
+		title: 'Appearance',
 		data: [
 			{
 				id: 3,
-				title: 'Tema',
+				title: 'Theme',
 				icon: <Feather name="moon" size={20} color="white" />,
-				href: '/dashboard/profile/theme'
+				href: '/dashboard/profile/settings/theme'
 			}
 		]
 	},
 	{
-		title: 'Soporte',
+		title: 'Support',
 		data: [
 			{
 				id: 4,
-				title: 'Ayuda',
+				title: 'Help',
 				icon: <AntDesign name="question" size={20} color="white" />,
 				href: '/'
 			}
@@ -76,11 +76,13 @@ export default function SettingsScreen() {
 					</TouchableOpacity>
 				)}
 				renderSectionHeader={({ section: { title } }) => (
-					<Text className="text-white opacity-50 my-2 mx-2">{title}</Text>
+					<Text className="text-primary-theme opacity-50 my-2 mx-2">
+						{title}
+					</Text>
 				)}
 				ItemSeparatorComponent={() => <Separator />}
 				ListFooterComponent={() => (
-					<Text className="text-white opacity-50 my-2 text-center">
+					<Text className="text-primary-theme opacity-50 my-2 text-center">
 						Versión 1.0.0
 					</Text>
 				)}
