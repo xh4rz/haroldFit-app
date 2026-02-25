@@ -14,7 +14,7 @@ export default function WelcomeScreen() {
 				</Text>
 
 				<Text className="text-base text-center mb-10 leading-6 text-primary-theme">
-					Discover everything our app has to offer
+					Your workouts, your progress, your best self.
 				</Text>
 
 				<View className="w-full gap-4">

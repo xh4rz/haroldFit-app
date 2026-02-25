@@ -65,7 +65,7 @@ export function ThemeContextProvider({ children }: { children: ReactNode }) {
 				setTheme
 			}}
 		>
-			<StatusBar style={colorScheme} />
+			<StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
 			{children}
 		</ThemeContext.Provider>
 	);

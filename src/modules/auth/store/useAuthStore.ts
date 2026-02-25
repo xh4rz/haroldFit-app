@@ -5,8 +5,8 @@ import { authCheckStatus, authLogin, authRegister } from '../services/auth';
 
 export interface AuthStoreState {
 	isAuthenticated: boolean;
-	token?: string;
-	user?: User;
+	token: string;
+	user: User;
 	login: (email: string, password: string) => Promise<boolean>;
 	register: (name: string, email: string, password: string) => Promise<boolean>;
 	checkStatus: () => Promise<void>;
@@ -14,14 +14,14 @@ export interface AuthStoreState {
 }
 
 export const useAuthStore = create<AuthStoreState>()((set, get) => ({
-	isAuthenticated: true,
-	token: undefined,
-	user: undefined,
+	isAuthenticated: false,
+	token: null,
+	user: null,
 	login: async (email: string, password: string) => {
 		const resp = await authLogin(email, password);
 
 		if (!resp) {
-			set({ isAuthenticated: false, token: undefined, user: undefined });
+			set({ isAuthenticated: false, token: null, user: null });
 			return false;
 		}
 
@@ -48,7 +48,7 @@ export const useAuthStore = create<AuthStoreState>()((set, get) => ({
 		const resp = await authCheckStatus();
 
 		if (!resp) {
-			set({ isAuthenticated: false, token: undefined, user: undefined });
+			set({ isAuthenticated: false, token: null, user: null });
 			return;
 		}
 
@@ -59,6 +59,6 @@ export const useAuthStore = create<AuthStoreState>()((set, get) => ({
 	logout: async () => {
 		await StorageAdapter.removeItem('token');
 
-		set({ isAuthenticated: false, token: undefined, user: undefined });
+		set({ isAuthenticated: false, token: null, user: null });
 	}
 }));

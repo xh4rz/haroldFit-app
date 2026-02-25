@@ -1,20 +1,5 @@
 import axiosClient from '@/api/axiosClient';
-import { AuthResponse, User } from '@/infrastructure/interfaces';
-
-const returnUserToken = (data: AuthResponse) => {
-	const user: User = {
-		id: data.id,
-		email: data.email,
-		fullName: data.fullName,
-		isActive: data.isActive,
-		roles: data.roles
-	};
-
-	return {
-		user: user,
-		token: data.token
-	};
-};
+import { AuthResponse } from '@/infrastructure/interfaces';
 
 export const authLogin = async (email: string, password: string) => {
 	email = email.toLowerCase();
@@ -25,15 +10,9 @@ export const authLogin = async (email: string, password: string) => {
 			password
 		});
 
-		return returnUserToken(data);
+		return data;
 	} catch (error) {
-		console.error({ error: error.response.data });
-		const objectError = {
-			message: error.response.data.error,
-			status: error.response.status
-		};
-
-		throw new Error(JSON.stringify(objectError));
+		throw new Error(JSON.stringify(error.response.data));
 	}
 };
 
@@ -49,23 +28,18 @@ export const authRegister = async (
 			password
 		});
 
-		return returnUserToken(data);
+		return data;
 	} catch (error) {
-		console.error({ error: error.response.data });
-		const objectError = {
-			message: error.response.data.error,
-			status: error.response.status
-		};
-
-		throw new Error(JSON.stringify(objectError));
+		throw new Error(JSON.stringify(error.response.data));
 	}
 };
 
+// todo: hacer api en el backend
 export const authCheckStatus = async () => {
 	try {
 		const { data } = await axiosClient.get<AuthResponse>('/auth/check-status');
 
-		return returnUserToken(data);
+		return data;
 	} catch (error) {
 		console.error(error);
 		return null;

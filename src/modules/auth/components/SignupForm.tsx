@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Link } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -7,14 +7,19 @@ import {
 	KeyboardAvoidingView,
 	Platform,
 	Text,
-	TouchableOpacity,
 	View,
-	Keyboard
+	Keyboard,
+	ScrollView
 } from 'react-native';
 import { z } from 'zod';
 import { useAuthStore } from '../store/useAuthStore';
-import { signupFormSchema } from '../validation/SignupFormSchema';
+import {
+	passwordValidationRules,
+	signupFormSchema
+} from '../validation/signupFormSchema';
 import { Input } from '@/components/Input';
+import { delay } from '@/utils';
+import { Button } from '@/components';
 
 type SignupFormData = z.infer<typeof signupFormSchema>;
 
@@ -26,16 +31,44 @@ export default function SignupForm() {
 	const {
 		control,
 		handleSubmit,
+		setError,
+		clearErrors,
+		watch,
 		formState: { errors }
 	} = useForm<SignupFormData>({
 		resolver: zodResolver(signupFormSchema),
 		mode: 'onChange',
 		defaultValues: {
-			name: '',
+			fullName: '',
 			email: '',
-			password: ''
+			password: '',
+			confirmPassword: ''
 		}
 	});
+
+	const password = watch('password') || '';
+
+	const rules = passwordValidationRules.map((rule) => ({
+		label: rule.label,
+		valid: rule.test(password)
+	}));
+
+	const onRegister = async (data: SignupFormData) => {
+		setLoading(true);
+		clearErrors('root');
+		await delay(1000);
+		try {
+			await register(data.fullName, data.email, data.password);
+		} catch (error) {
+			const errorObject = JSON.parse(error.message);
+			setError('root', {
+				type: 'custom',
+				message: errorObject.message
+			});
+		} finally {
+			setLoading(false);
+		}
+	};
 
 	useFocusEffect(
 		useCallback(() => {
@@ -45,17 +78,15 @@ export default function SignupForm() {
 		}, [])
 	);
 
-	const onRegister = async (data: SignupFormData) => {
-		setLoading(true);
-		try {
-			await register(data.name, data.email, data.password);
-		} catch (error) {
-			const errorObject = JSON.parse(error.message);
-			console.log({ errorObject });
-		} finally {
-			setLoading(false);
-		}
-	};
+	useEffect(() => {
+		const subscription = watch(() => {
+			if (errors.root) {
+				clearErrors('root');
+			}
+		});
+
+		return () => subscription.unsubscribe();
+	}, [watch, errors.root, clearErrors]);
 
 	return (
 		<KeyboardAvoidingView
@@ -63,22 +94,24 @@ export default function SignupForm() {
 			className="bg-theme"
 			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 		>
-			<View className="flex-1 justify-center p-1 mx-2.5">
-				<View className="p-5 rounded-2xl shadow-sm shadow-black w-full bg-card-theme">
-					<Text className="text-4xl mb-12 text-center font-bold text-primary">
-						HaroldFit
-						<Text className="text-secondary">App</Text>
-					</Text>
-
+			<ScrollView
+				contentContainerStyle={{
+					flexGrow: 1,
+					paddingBottom: 120
+				}}
+				keyboardShouldPersistTaps="handled"
+			>
+				<View className=" m-6">
 					<Input
 						autoFocus
 						required
 						autoCapitalize="none"
 						control={control}
-						name="name"
-						label="Username"
-						placeholder="Enter your username"
-						error={errors.name}
+						name="fullName"
+						label="Full Name"
+						placeholder="Enter your Full Name"
+						error={errors.fullName}
+						disabled={loading}
 					/>
 
 					<Input
@@ -90,6 +123,7 @@ export default function SignupForm() {
 						label="Email"
 						placeholder="Enter your email"
 						error={errors.email}
+						disabled={loading}
 					/>
 
 					<Input
@@ -100,18 +134,47 @@ export default function SignupForm() {
 						label="Password"
 						placeholder="Enter your password"
 						error={errors.password}
-						secureTextEntry={true}
+						isPassword={true}
+						disabled={loading}
 					/>
 
-					<TouchableOpacity
-						className="w-full h-12 rounded-lg items-center justify-center mt-5 bg-secondary"
-						onPress={handleSubmit(onRegister)}
+					<Input
+						required
+						control={control}
+						autoCapitalize="none"
+						name="confirmPassword"
+						label="Repeat Password"
+						placeholder="Repeat your password"
+						error={errors.confirmPassword}
+						isPassword={true}
 						disabled={loading}
-					>
-						<Text className="text-white text-base font-bold">
-							{loading ? 'Loading...' : 'Register'}
-						</Text>
-					</TouchableOpacity>
+					/>
+
+					{errors.root && (
+						<Text className="text-red-500 mb-5">{errors.root.message}</Text>
+					)}
+
+					<View>
+						<Text className="text-white mb-2">Password requirements: </Text>
+						{rules.map((rule, index) => (
+							<Text
+								key={index}
+								className={`text-[13px] mb-0.5 ${
+									rule.valid ? 'text-green-500' : 'text-gray-400'
+								}`}
+							>
+								{rule.label}
+							</Text>
+						))}
+					</View>
+
+					<Button
+						title="Register"
+						variant="secondary"
+						onPress={handleSubmit(onRegister)}
+						className="mt-5"
+						loading={loading}
+					/>
 
 					<Text className="mt-5 text-center text-primary-theme">
 						Already have an account?{' '}
@@ -120,7 +183,7 @@ export default function SignupForm() {
 						</Link>
 					</Text>
 				</View>
-			</View>
+			</ScrollView>
 		</KeyboardAvoidingView>
 	);
 }

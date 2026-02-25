@@ -1,5 +1,5 @@
-import { useAuthStore } from '@/modules/auth/store/useAuthStore';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { useAuthStore } from '@/modules/auth/store/useAuthStore';
 
 export default function ProfileScreen() {
 	const { logout } = useAuthStore();
@@ -9,15 +9,12 @@ export default function ProfileScreen() {
 				<Text className="text-3 font-bold text-primary-theme text-4xl">
 					Bienvenido al perfil
 				</Text>
-
 				<TouchableOpacity
 					onPress={logout}
 					className="bg-red-500 p-2 rounded-md"
 				>
 					<Text className="text-white">Cerrar sesión</Text>
 				</TouchableOpacity>
-
-				{/* <ThemeToggle /> */}
 			</View>
 		</View>
 	);
