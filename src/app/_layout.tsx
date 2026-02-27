@@ -20,6 +20,8 @@ function RootLayout() {
 		}
 	};
 
+	console.log(pathname);
+
 	return (
 		<React.Fragment>
 			<Stack
@@ -51,7 +53,7 @@ function RootLayout() {
 				</Stack.Protected>
 
 				<Stack.Protected guard={isAuthenticated}>
-					<Stack.Screen name="dashboard" options={{ headerShown: false }} />
+					<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 				</Stack.Protected>
 			</Stack>
 		</React.Fragment>

@@ -20,6 +20,7 @@ import {
 import { Input } from '@/components/Input';
 import { delay } from '@/utils';
 import { Button } from '@/components';
+import { SignInIcon } from 'phosphor-react-native';
 
 type SignupFormData = z.infer<typeof signupFormSchema>;
 
@@ -172,6 +173,7 @@ export default function SignupForm() {
 						title="Register"
 						variant="secondary"
 						onPress={handleSubmit(onRegister)}
+						iconLeft={<SignInIcon />}
 						className="mt-5"
 						loading={loading}
 					/>

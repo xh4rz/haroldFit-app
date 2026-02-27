@@ -16,7 +16,7 @@ export default function HomeScreen() {
 						{user?.fullName}
 					</Text>
 
-					<Link href="/dashboard/home-nested" push asChild>
+					<Link href="/home/home-nested" push asChild>
 						<Button title="Home Nested" />
 					</Link>
 				</View>

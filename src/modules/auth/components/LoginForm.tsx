@@ -15,6 +15,7 @@ import { loginFormSchema } from '../validation/loginFormSchema';
 import { useAuthStore } from '../store/useAuthStore';
 import { Button, Input } from '@/components';
 import { delay } from '@/utils';
+import { SignInIcon } from 'phosphor-react-native';
 
 type LoginFormData = z.infer<typeof loginFormSchema>;
 
@@ -124,6 +125,7 @@ export default function LoginForm() {
 					title="Login"
 					variant="secondary"
 					onPress={handleSubmit(onLogin)}
+					iconLeft={<SignInIcon />}
 					className="mt-5"
 					loading={loading}
 				/>

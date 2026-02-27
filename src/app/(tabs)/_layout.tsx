@@ -1,8 +1,11 @@
 import { colors } from '@/constants/colors';
-import { AntDesign } from '@expo/vector-icons';
-import { Tabs } from 'expo-router';
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
+import { Tabs, useSegments } from 'expo-router';
 
 export default function DashboardLayout() {
+	const segments = useSegments();
+
+	const hideTabs = [...segments].includes('create-routine');
 	return (
 		<Tabs
 			screenOptions={{
@@ -15,13 +18,14 @@ export default function DashboardLayout() {
 				tabBarActiveBackgroundColor: colors.secondary,
 				animation: 'none',
 				tabBarStyle: {
-					backgroundColor: colors.secondary
+					backgroundColor: colors.secondary,
+					display: hideTabs ? 'none' : 'flex'
 				}
 			}}
 			backBehavior="order"
 		>
 			<Tabs.Screen
-				name="(home)"
+				name="home"
 				options={{
 					title: 'Home',
 					headerShown: false,
@@ -43,8 +47,8 @@ export default function DashboardLayout() {
 					headerShown: false,
 					popToTopOnBlur: true,
 					tabBarIcon: ({ focused }) => (
-						<AntDesign
-							name="bulb1"
+						<MaterialIcons
+							name="fitness-center"
 							size={24}
 							color={focused ? colors.primary : 'black'}
 						/>

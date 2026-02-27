@@ -39,7 +39,7 @@ const sections: SectionListData<{
 				id: 3,
 				title: 'Theme',
 				icon: <Feather name="moon" size={20} color="white" />,
-				href: '/dashboard/profile/settings/theme'
+				href: '/profile/settings/theme'
 			}
 		]
 	},

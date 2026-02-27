@@ -16,7 +16,7 @@ export default function ProfileLayout() {
 				animation: 'slide_from_right',
 				headerRight: () => (
 					<TouchableOpacity
-						onPress={() => router.navigate('/dashboard/profile/settings')}
+						onPress={() => router.navigate('/profile/settings')}
 					>
 						<AntDesign name="setting" size={24} color="white" />
 					</TouchableOpacity>

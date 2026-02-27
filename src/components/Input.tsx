@@ -54,6 +54,8 @@ export const Input: React.FC<InputProps> = ({
 		return theme === 'dark' ? 'bg-gray-700' : 'bg-gray-50';
 	};
 
+	// transition-all duration-300
+
 	return (
 		<View className="w-full mb-4">
 			<View className="relative">
@@ -71,7 +73,6 @@ export const Input: React.FC<InputProps> = ({
 								value={value}
 								secureTextEntry={isPassword && !showPassword}
 								className={`
-								transition-all duration-300
 								h-14 w-full rounded-xl text-base px-4 pt-6 pb-2 border-2
 								${getBorderColor()}
 								${getBackgroundColor()}

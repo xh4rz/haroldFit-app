@@ -1,5 +1,6 @@
+import { Button } from '@/components';
 import { router } from 'expo-router';
-import { Pressable, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 export default function WelcomeScreen() {
 	return (
@@ -18,21 +19,21 @@ export default function WelcomeScreen() {
 				</Text>
 
 				<View className="w-full gap-4">
-					<Pressable
-						className="bg-secondary py-4 px-8 rounded-lg items-center"
+					<Button
+						title="Login"
+						variant="secondary"
+						className="p-4"
+						textClassName="font-semibold"
 						onPress={() => router.push('/auth/login')}
-					>
-						<Text className="text-white text-base font-semibold">Login</Text>
-					</Pressable>
+					/>
 
-					<Pressable
-						className="border py-4 px-8 rounded-lg items-center bg-transparent border-primary"
+					<Button
+						title="Create Account"
+						variant="outline"
+						className="p-4"
+						textClassName="font-semibold"
 						onPress={() => router.push('/auth/signup')}
-					>
-						<Text className="text-base font-semibold text-primary">
-							Create Account
-						</Text>
-					</Pressable>
+					/>
 				</View>
 			</View>
 		</View>

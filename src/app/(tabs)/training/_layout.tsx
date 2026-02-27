@@ -16,6 +16,16 @@ export default function TrainingLayout() {
 				name="index"
 				options={{ headerShown: true, title: 'Training' }}
 			/>
+
+			<Stack.Screen
+				name="create-routine/index"
+				options={{ headerShown: true, title: 'Create Routine' }}
+			/>
+
+			<Stack.Screen
+				name="create-routine/add-exercise/index"
+				options={{ headerShown: true, title: 'Add Exercise' }}
+			/>
 		</Stack>
 	);
 }
