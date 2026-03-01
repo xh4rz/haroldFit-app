@@ -1,7 +1,10 @@
-import { colors } from '@/constants/colors';
 import { Stack } from 'expo-router';
+import { colors } from '@/constants/colors';
+import { useThemeColors } from '@/hooks';
 
 export default function TrainingLayout() {
+	const theme = useThemeColors();
+
 	return (
 		<Stack
 			screenOptions={{
@@ -9,12 +12,15 @@ export default function TrainingLayout() {
 				headerStyle: { backgroundColor: colors.primary },
 				headerTintColor: colors.secondary,
 				headerTitleAlign: 'center',
-				animation: 'slide_from_right'
+				animation: 'slide_from_right',
+				contentStyle: {
+					backgroundColor: theme.background
+				}
 			}}
 		>
 			<Stack.Screen
 				name="index"
-				options={{ headerShown: true, title: 'Training' }}
+				options={{ headerShown: true, title: 'Routine' }}
 			/>
 
 			<Stack.Screen

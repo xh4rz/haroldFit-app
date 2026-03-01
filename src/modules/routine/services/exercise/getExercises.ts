@@ -1,8 +1,8 @@
 import axiosClient from '@/api/axiosClient';
-import { ExerciseResponse } from '@/infrastructure/interfaces';
 import { delay } from '@/utils';
+import { ExerciseResponse } from '@/infrastructure/interfaces';
 
-export const getEjercicies = async () => {
+export const getExercises = async () => {
 	await delay(1000);
 	try {
 		const { data } = await axiosClient.get<ExerciseResponse[]>('/exercises');

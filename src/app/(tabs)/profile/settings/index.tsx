@@ -1,4 +1,4 @@
-import { Separator } from '@/components/Separator';
+import { Separator } from '@/components/atoms/Separator/Separator';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { Href, useRouter } from 'expo-router';
 import {
@@ -60,7 +60,7 @@ export default function SettingsScreen() {
 	const router = useRouter();
 
 	return (
-		<View className="flex-1 bg-theme">
+		<View className="flex-1">
 			<SectionList
 				sections={sections}
 				keyExtractor={(item, index) => item.id.toString() + index}

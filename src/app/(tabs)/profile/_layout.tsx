@@ -1,10 +1,13 @@
 import { colors } from '@/constants/colors';
+import { useThemeColors } from '@/hooks';
 import { AntDesign } from '@expo/vector-icons';
 import { Stack, useRouter } from 'expo-router';
 import { TouchableOpacity } from 'react-native';
 
 export default function ProfileLayout() {
 	const router = useRouter();
+
+	const theme = useThemeColors();
 
 	return (
 		<Stack
@@ -20,7 +23,10 @@ export default function ProfileLayout() {
 					>
 						<AntDesign name="setting" size={24} color="white" />
 					</TouchableOpacity>
-				)
+				),
+				contentStyle: {
+					backgroundColor: theme.background
+				}
 			}}
 		>
 			<Stack.Screen

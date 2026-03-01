@@ -5,7 +5,7 @@ export const colors = {
 
 	// Colores de tema claro
 	light: {
-		background: '#f4f4f5',
+		background: 'white',
 		backgroundCard: '#ffffff',
 		textPrimary: '#000000',
 		textSecondary: '#666666'

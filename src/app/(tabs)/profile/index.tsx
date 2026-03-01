@@ -4,7 +4,7 @@ import { useAuthStore } from '@/modules/auth/store/useAuthStore';
 export default function ProfileScreen() {
 	const { logout } = useAuthStore();
 	return (
-		<View className="flex-1 bg-theme">
+		<View className="flex-1">
 			<View className="flex-1 justify-center items-center px-5 gap-4">
 				<Text className="text-3 font-bold text-primary-theme text-4xl">
 					Bienvenido al perfil

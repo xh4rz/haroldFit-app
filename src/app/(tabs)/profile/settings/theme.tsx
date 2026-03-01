@@ -1,4 +1,4 @@
-import { Separator } from '@/components/Separator';
+import { Separator } from '@/components/atoms/Separator/Separator';
 import { ThemeContext, ThemeName } from '@/context/ThemeContext';
 import { Feather } from '@expo/vector-icons';
 import { useContext } from 'react';
@@ -14,7 +14,7 @@ export default function ThemeScreen() {
 	const { theme, setTheme } = useContext(ThemeContext);
 
 	return (
-		<View className="flex-1 bg-theme">
+		<View className="flex-1">
 			<Text className="text-primary-theme opacity-50 my-2 mx-2 font-semibold">
 				Seleccione el tema:
 			</Text>

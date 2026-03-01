@@ -30,7 +30,11 @@ module.exports = {
 		}
 	},
 	plugins: [
-		function ({ addComponents }) {
+		function ({
+			addComponents
+		}: {
+			addComponents: (components: Record<string, unknown>) => void;
+		}) {
 			addComponents({
 				'.bg-theme': {
 					'@apply bg-bg-light dark:bg-bg-dark': {}

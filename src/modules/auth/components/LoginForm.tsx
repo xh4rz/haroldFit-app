@@ -13,7 +13,7 @@ import {
 import { z } from 'zod';
 import { loginFormSchema } from '../validation/loginFormSchema';
 import { useAuthStore } from '../store/useAuthStore';
-import { Button, Input } from '@/components';
+import { Button, Input } from '@/components/atoms';
 import { delay } from '@/utils';
 import { SignInIcon } from 'phosphor-react-native';
 
@@ -77,7 +77,6 @@ export default function LoginForm() {
 	return (
 		<KeyboardAvoidingView
 			style={{ flex: 1 }}
-			className="bg-theme"
 			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 		>
 			<View className="flex-1 justify-center m-6">

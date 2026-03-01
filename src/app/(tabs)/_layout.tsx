@@ -2,10 +2,11 @@ import { colors } from '@/constants/colors';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { Tabs, useSegments } from 'expo-router';
 
-export default function DashboardLayout() {
+export default function TabsLayout() {
 	const segments = useSegments();
 
 	const hideTabs = [...segments].includes('create-routine');
+
 	return (
 		<Tabs
 			screenOptions={{
@@ -14,7 +15,7 @@ export default function DashboardLayout() {
 				headerTintColor: colors.secondary,
 				headerTitleAlign: 'center',
 				tabBarActiveTintColor: colors.primary,
-				tabBarInactiveTintColor: 'black',
+				tabBarInactiveTintColor: 'white',
 				tabBarActiveBackgroundColor: colors.secondary,
 				animation: 'none',
 				tabBarStyle: {
@@ -34,23 +35,23 @@ export default function DashboardLayout() {
 						<AntDesign
 							name="home"
 							size={24}
-							color={focused ? colors.primary : 'black'}
+							color={focused ? colors.primary : 'white'}
 						/>
 					)
 				}}
 			/>
 
 			<Tabs.Screen
-				name="training"
+				name="routine"
 				options={{
-					title: 'Training',
+					title: 'Routine',
 					headerShown: false,
 					popToTopOnBlur: true,
 					tabBarIcon: ({ focused }) => (
 						<MaterialIcons
 							name="fitness-center"
 							size={24}
-							color={focused ? colors.primary : 'black'}
+							color={focused ? colors.primary : 'white'}
 						/>
 					)
 				}}
@@ -66,7 +67,7 @@ export default function DashboardLayout() {
 						<AntDesign
 							name="user"
 							size={24}
-							color={focused ? colors.primary : 'black'}
+							color={focused ? colors.primary : 'white'}
 						/>
 					)
 				}}

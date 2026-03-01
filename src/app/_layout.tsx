@@ -5,12 +5,17 @@ import { AppContextProvider } from '@/context/AppContext';
 import { useAuthStore } from '@/modules/auth/store/useAuthStore';
 import { colors } from '@/constants/colors';
 import { Ionicons } from '@expo/vector-icons';
+import { useThemeColors } from '@/hooks';
 import '../../global.css';
 
 function RootLayout() {
-	const { isAuthenticated } = useAuthStore();
 	const router = useRouter();
+
 	const pathname = usePathname();
+
+	const { isAuthenticated } = useAuthStore();
+
+	const theme = useThemeColors();
 
 	const handleBack = () => {
 		if (pathname === '/auth/login') {
@@ -20,7 +25,7 @@ function RootLayout() {
 		}
 	};
 
-	console.log(pathname);
+	console.log({ pathname });
 
 	return (
 		<React.Fragment>
@@ -35,7 +40,10 @@ function RootLayout() {
 						<TouchableOpacity onPress={handleBack}>
 							<Ionicons name="arrow-back" size={24} color={colors.secondary} />
 						</TouchableOpacity>
-					)
+					),
+					contentStyle: {
+						backgroundColor: theme.background
+					}
 				}}
 			>
 				<Stack.Protected guard={!isAuthenticated}>

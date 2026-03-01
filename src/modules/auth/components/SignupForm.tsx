@@ -17,9 +17,9 @@ import {
 	passwordValidationRules,
 	signupFormSchema
 } from '../validation/signupFormSchema';
-import { Input } from '@/components/Input';
+import { Input } from '@/components/atoms/Input/Input';
 import { delay } from '@/utils';
-import { Button } from '@/components';
+import { Button } from '@/components/atoms';
 import { SignInIcon } from 'phosphor-react-native';
 
 type SignupFormData = z.infer<typeof signupFormSchema>;
@@ -60,7 +60,7 @@ export default function SignupForm() {
 		await delay(1000);
 		try {
 			await register(data.fullName, data.email, data.password);
-		} catch (error) {
+		} catch (error: any) {
 			const errorObject = JSON.parse(error.message);
 			setError('root', {
 				type: 'custom',
@@ -92,7 +92,6 @@ export default function SignupForm() {
 	return (
 		<KeyboardAvoidingView
 			style={{ flex: 1 }}
-			className="bg-theme"
 			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 		>
 			<ScrollView
