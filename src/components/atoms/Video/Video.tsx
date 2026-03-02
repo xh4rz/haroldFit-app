@@ -1,10 +1,15 @@
-import { VideoView as ExpoVideoView, VideoPlayer } from 'expo-video';
+import {
+	VideoView as ExpoVideoView,
+	VideoContentFit,
+	VideoPlayer
+} from 'expo-video';
 
 type VideoProps = {
 	player: VideoPlayer;
+	contentFit?: VideoContentFit;
 };
 
-export const Video = ({ player }: VideoProps) => (
+export const Video = ({ player, contentFit = 'fill' }: VideoProps) => (
 	<ExpoVideoView
 		style={{
 			width: '100%',
@@ -12,7 +17,7 @@ export const Video = ({ player }: VideoProps) => (
 		}}
 		player={player}
 		nativeControls={false}
-		contentFit="cover"
+		contentFit={contentFit}
 		surfaceType="textureView"
 	/>
 );

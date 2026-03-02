@@ -8,7 +8,7 @@ export default function TrainingScreen() {
 
 	return (
 		<View className="gap-4 p-5">
-			<Text className="text-white">Routines</Text>
+			<Text>Routines</Text>
 
 			<Button
 				title="New Routine"

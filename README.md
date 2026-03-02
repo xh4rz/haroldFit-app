@@ -1,6 +1,140 @@
-# Welcome to your Expo app 👋
+## 🏋️ HaroldFit App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+HaroldFit es una aplicación de seguimiento de entrenamientos de gimnasio inspirada en Hevy.
+
+La aplicación permite a los usuarios:
+
+- Registrar rutinas de entrenamiento
+- Anotar ejercicios y series
+- Monitorear el progreso a lo largo del tiempo
+
+## 📐 Arquitectura
+
+React Native + Expo Router
+
+Arquitectura basada en **Atomic Design + Modular Architecture**
+
+El proyecto separa claramente:
+
+- 🎨 UI (Atomic Design)
+- 🧠 Lógica de negocio (Modules)
+- 🌐 Infraestructura (API, adapters)
+- 📱 Navegación (Expo Router)
+
+---
+
+## 📂 Estructura
+
+```bash
+src/
+ ├── app/               # Pages (Expo Router)
+ ├── components/        # Atomic Design (UI)
+ │   ├── atoms/
+ │   ├── molecules/
+ │   ├── organisms/
+ │   └── templates/
+ │
+ ├── modules/           # Lógica de negocio por feature
+ │   ├── auth/
+ │   │   ├── services/
+ │   │   ├── store/
+ │   │   └── validation/
+ │   └── routine/
+ │
+ ├── api/               # Configuración Axios
+ ├── adapters/          # Adaptadores (storage, etc.)
+ ├── infrastructure/    # Interfaces / contratos
+ ├── hooks/             # Hooks globales
+ ├── constants/
+ └── utils/
+```
+
+---
+
+## 🎨 UI — Atomic Design
+
+- **Atoms** → Componentes básicos (Button, TextTheme, Input)
+- **Molecules** → Composición de átomos
+- **Organisms** → Componentes complejos (LoginForm, ExerciseList)
+- **Templates** → Layouts reutilizables
+
+La UI **no contiene lógica de negocio**.
+
+---
+
+## 🧠 Modules
+
+Cada feature vive en su propio módulo.
+
+Ejemplo:
+
+```bash
+modules/auth/
+ ├── services/      # Llamadas a API / lógica aplicación
+ ├── store/         # Estado del módulo
+ └── validation/    # Esquemas de formulario (Zod)
+```
+
+Los módulos:
+
+- No dependen de componentes
+- Contienen la lógica del negocio
+- Son independientes entre sí
+
+---
+
+## 📱 Pages (Expo Router)
+
+Ubicación: `src/app/`
+
+Responsabilidades:
+
+- Leer parámetros
+- Usar hooks del módulo
+- Renderizar componentes
+
+Las Pages solo orquestan.
+
+---
+
+## 🔄 Flujo
+
+```
+Page (app/)
+   ↓
+Module Hook
+   ↓
+Service
+   ↓
+API / Adapter
+   ↓
+Respuesta → UI
+```
+
+---
+
+## 🏛 Principios
+
+- Separación de responsabilidades
+- Bajo acoplamiento
+- Modularidad por feature
+- UI desacoplada del negocio
+- Escalable para proyectos medianos/grandes
+
+---
+
+## 🚀 Main Tech Stack
+
+- **React Native 0.81**
+- **Expo SDK 54**
+- **Expo Router 6**
+- **TypeScript**
+- **NativeWind (TailwindCSS for React Native)**
+- **Zustand** (State Management)
+- **TanStack React Query** (Server State)
+- **React Hook Form**
+- **Zod** (Schema Validation)
+- **Axios**
 
 ## Get started
 
@@ -32,19 +166,3 @@ When you're ready, run:
 ```bash
 npm run reset-project
 ```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.

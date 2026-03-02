@@ -1,17 +1,19 @@
 import { View } from 'react-native';
 import { useEvent } from 'expo';
-import { useVideoPlayer } from 'expo-video';
+import { useVideoPlayer, VideoContentFit } from 'expo-video';
 import { PauseIcon, PlayIcon } from 'phosphor-react-native';
 import { IconButton, Video } from '@/components/atoms';
 
 type VideoPlayerProps = {
 	url: string;
 	autoPlayLoop?: boolean;
+	contentFit?: VideoContentFit;
 };
 
 export const VideoPlayer = ({
 	url,
-	autoPlayLoop = false
+	autoPlayLoop = false,
+	contentFit = 'fill'
 }: VideoPlayerProps) => {
 	const player = useVideoPlayer(url, (player) => {
 		player.loop = autoPlayLoop;
@@ -26,7 +28,7 @@ export const VideoPlayer = ({
 
 	return (
 		<View className="w-full h-full">
-			<Video player={player} />
+			<Video player={player} contentFit={contentFit} />
 
 			{autoPlayLoop && (
 				<View className="absolute top-5 right-10">

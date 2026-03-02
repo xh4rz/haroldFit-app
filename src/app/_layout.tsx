@@ -49,13 +49,13 @@ function RootLayout() {
 				<Stack.Protected guard={!isAuthenticated}>
 					<Stack.Screen name="index" options={{ headerShown: false }} />
 					<Stack.Screen
-						name="auth/login"
+						name="auth/login/index"
 						options={{
 							headerTitle: 'Login'
 						}}
 					/>
 					<Stack.Screen
-						name="auth/signup"
+						name="auth/signup/index"
 						options={{ headerTitle: 'Signup' }}
 					/>
 				</Stack.Protected>

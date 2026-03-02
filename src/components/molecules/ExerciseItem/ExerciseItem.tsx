@@ -1,6 +1,6 @@
 import { TouchableOpacity, View } from 'react-native';
 import { Text } from '@/components/atoms';
-import { VideoPlayer } from '@/components/molecules';
+import { VideoPlayer } from '../VideoPlayer';
 import { ExerciseResponse } from '@/infrastructure/interfaces';
 
 type ExerciseItemProps = {
@@ -28,8 +28,7 @@ export const ExerciseItem = ({
 					overflow: 'hidden'
 				}}
 			>
-				{/* <VideoView url={exercise.video} /> */}
-				<VideoPlayer url={exercise.video} />
+				<VideoPlayer url={exercise.video} contentFit="cover" />
 			</View>
 
 			<View>

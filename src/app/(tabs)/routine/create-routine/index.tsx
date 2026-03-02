@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 import { BarbellIcon, PlusIcon } from 'phosphor-react-native';
 import { Button } from '@/components/atoms';
 
-export default function CreateRoutineScreen() {
+export default function CreateRoutineRoute() {
 	const router = useRouter();
 	return (
 		<View className="flex-1 justify-center items-center gap-10 p-5">
