@@ -3,16 +3,22 @@ import { View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
 import { getExercises } from '@/modules/routine/services/exercise';
-import { ExerciseList, MuscleModalList } from '@/components/organisms';
+import { BottomSheetSelectList, ExerciseList } from '@/components/organisms';
 import { Button } from '@/components/atoms';
 import { getMuscles } from '@/modules/routine/services/muscle';
 import { LoadingView } from '@/components/molecules';
+import { getEquipments } from '@/modules/routine/services/equipment';
 
 export const AddExercise = () => {
 	const router = useRouter();
 
-	const [showBottomSheetModalMuscle, setShowBottomSheetModalMuscle] =
-		useState(false);
+	const [showModalEquipment, setShowModalEquipment] = useState(false);
+
+	const [showModalMuscle, setShowModalMuscle] = useState(false);
+
+	const [idMuscle, setIdMuscle] = useState(1);
+
+	const [idEquipment, setIdEquipment] = useState(1);
 
 	const { data: dataExercises, isPending: isPendingExercises } = useQuery({
 		queryKey: ['exercises'],
@@ -25,6 +31,12 @@ export const AddExercise = () => {
 		enabled: !isPendingExercises
 	});
 
+	const { data: dataEquipments, isPending: isPendingEquipments } = useQuery({
+		queryKey: ['equipments'],
+		queryFn: getEquipments,
+		enabled: !isPendingExercises
+	});
+
 	const handlePressExercise = (id: string, title: string) => {
 		router.push({
 			pathname: '/routine/create-routine/add-exercise/[id]',
@@ -32,14 +44,21 @@ export const AddExercise = () => {
 		});
 	};
 
-	const [idMuscle, setIdMuscle] = useState(1);
+	const handlePressEquipment = (id: number) => {
+		setIdEquipment(id);
+		setShowModalEquipment(false);
+	};
 
 	const handlePressMuscle = (id: number) => {
 		setIdMuscle(id);
-		setShowBottomSheetModalMuscle(false);
+		setShowModalMuscle(false);
 	};
 
 	const findMuscle = dataMuscles?.find((muscle) => muscle.id === idMuscle);
+
+	const findEquipment = dataEquipments?.find(
+		(equipment) => equipment.id === idEquipment
+	);
 
 	if (isPendingExercises) {
 		return <LoadingView titleLoading="exercises" />;
@@ -54,31 +73,42 @@ export const AddExercise = () => {
 			<View className="flex-row gap-2 p-4">
 				<View className="flex-1">
 					<Button
-						disabled
-						title="Equipment"
+						title={findEquipment?.name ?? ''}
+						loading={isPendingEquipments}
 						variant="secondary"
-						onPress={() => {}}
+						onPress={() => setShowModalEquipment(true)}
 					/>
 				</View>
-
 				<View className="flex-1">
 					<Button
 						title={findMuscle?.name ?? ''}
 						loading={isPendingMuscles}
 						variant="secondary"
-						onPress={() => setShowBottomSheetModalMuscle(true)}
+						onPress={() => setShowModalMuscle(true)}
 					/>
 				</View>
 			</View>
 
 			<ExerciseList data={dataExercises} onPress={handlePressExercise} />
 
-			<MuscleModalList
+			<BottomSheetSelectList
+				title="Eqipments"
+				data={dataEquipments}
+				onPress={handlePressEquipment}
+				show={showModalEquipment}
+				setShow={setShowModalEquipment}
+				idSelected={idEquipment}
+				imageScale={0.6}
+			/>
+
+			<BottomSheetSelectList
+				title="Muscles"
 				data={dataMuscles}
 				onPress={handlePressMuscle}
-				showBottomSheetModal={showBottomSheetModalMuscle}
-				setShowBottomSheetModal={setShowBottomSheetModalMuscle}
-				idMuscle={idMuscle}
+				show={showModalMuscle}
+				setShow={setShowModalMuscle}
+				idSelected={idMuscle}
+				imageScale={1.2}
 			/>
 		</View>
 	);
