@@ -1,17 +1,18 @@
 import axiosClient from '@/api/axiosClient';
-import { AuthResponse } from '@/infrastructure/interfaces';
+import { Auth } from '@/infrastructure/interfaces';
 
 export const authLogin = async (email: string, password: string) => {
 	email = email.toLowerCase();
 
 	try {
-		const { data } = await axiosClient.post<AuthResponse>('/auth/login', {
+		const { data } = await axiosClient.post<Auth>('/auth/login', {
 			email,
 			password
 		});
 
 		return data;
 	} catch (error) {
+		console.log({ error });
 		throw new Error(JSON.stringify(error.response.data));
 	}
 };
@@ -22,7 +23,7 @@ export const authRegister = async (
 	password: string
 ) => {
 	try {
-		const { data } = await axiosClient.post<AuthResponse>('/auth/register', {
+		const { data } = await axiosClient.post<Auth>('/auth/register', {
 			fullName: name,
 			email,
 			password
@@ -37,7 +38,7 @@ export const authRegister = async (
 // todo: hacer api en el backend
 export const authCheckStatus = async () => {
 	try {
-		const { data } = await axiosClient.get<AuthResponse>('/auth/check-status');
+		const { data } = await axiosClient.get<Auth>('/auth/check-status');
 
 		return data;
 	} catch (error) {

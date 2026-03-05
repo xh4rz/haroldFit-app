@@ -1,7 +1,8 @@
+import { ReactNode } from 'react';
 import { View } from 'react-native';
 
 interface TemplateLayoutProps {
-	children: React.ReactNode;
+	children: ReactNode;
 	className?: string;
 }
 

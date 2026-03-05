@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 import { ExerciseInfo, VideoPlayer } from '@/components/molecules';
-import { ExerciseResponse } from '@/infrastructure/interfaces';
+import { Exercise } from '@/infrastructure/interfaces';
 
 type ExerciseDetailProps = {
-	exercise: ExerciseResponse;
+	exercise: Exercise;
 };
 
 export const ExerciseDetail = ({ exercise }: ExerciseDetailProps) => {

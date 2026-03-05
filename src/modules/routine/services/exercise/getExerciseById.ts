@@ -1,15 +1,9 @@
 import axiosClient from '@/api/axiosClient';
-import { ExerciseResponse } from '@/infrastructure/interfaces';
-import { delay } from '@/utils';
+import { Exercise } from '@/infrastructure/interfaces';
 
-export const getExerciseById = async (
-	id: string
-): Promise<ExerciseResponse | undefined> => {
-	await delay(1000);
+export const getExerciseById = async (id: string) => {
 	try {
-		const { data } = await axiosClient.get<ExerciseResponse>(
-			`/exercises/${id}`
-		);
+		const { data } = await axiosClient.get<Exercise>(`/exercises/${id}`);
 
 		return data;
 	} catch {

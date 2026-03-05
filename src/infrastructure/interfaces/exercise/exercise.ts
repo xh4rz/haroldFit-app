@@ -1,4 +1,4 @@
-export interface ExerciseResponse {
+export interface Exercise {
 	id: string;
 	title: string;
 	instruction: string[];
@@ -8,7 +8,7 @@ export interface ExerciseResponse {
 	secondaryMuscles?: OptionItem[];
 }
 
-export interface OptionItem {
+interface OptionItem {
 	id: number;
 	name: string;
 }

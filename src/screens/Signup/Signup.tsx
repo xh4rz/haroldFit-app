@@ -10,7 +10,6 @@ import {
 	signupFormSchema
 } from '@/modules/auth/validation/signupFormSchema';
 import { Input } from '@/components/atoms/Input/Input';
-import { delay } from '@/utils';
 import { Button, Text } from '@/components/atoms';
 import { SignInIcon } from 'phosphor-react-native';
 
@@ -49,7 +48,6 @@ export const Signup = () => {
 	const onRegister = async (data: SignupFormData) => {
 		setLoading(true);
 		clearErrors('root');
-		await delay(1000);
 		try {
 			await register(data.fullName, data.email, data.password);
 		} catch (error: any) {

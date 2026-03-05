@@ -7,7 +7,6 @@ import { z } from 'zod';
 import { loginFormSchema } from '@/modules/auth/validation/loginFormSchema';
 import { useAuthStore } from '@/modules/auth/store/useAuthStore';
 import { Button, Input } from '@/components/atoms';
-import { delay } from '@/utils';
 import { SignInIcon } from 'phosphor-react-native';
 
 type LoginFormData = z.infer<typeof loginFormSchema>;
@@ -36,7 +35,6 @@ export const Login = () => {
 	const onLogin = async (data: LoginFormData) => {
 		setLoading(true);
 		clearErrors('root');
-		await delay(1000);
 		try {
 			await login(data.email, data.password);
 		} catch {

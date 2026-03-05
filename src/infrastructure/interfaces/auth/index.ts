@@ -1,3 +1,3 @@
-export * from './auth.responses';
+export * from './auth';
 export * from './auth.status';
 export * from './user';

@@ -1,10 +1,10 @@
 import { TouchableOpacity, View } from 'react-native';
 import { Text } from '@/components/atoms';
 import { VideoPlayer } from '../VideoPlayer';
-import { ExerciseResponse } from '@/infrastructure/interfaces';
+import { Exercise } from '@/infrastructure/interfaces';
 
 type ExerciseItemProps = {
-	exercise: ExerciseResponse;
+	exercise: Exercise;
 	onPress: () => void;
 	// isSelected: boolean;
 	// textColor: string;
@@ -20,17 +20,9 @@ export const ExerciseItem = ({
 	// 	const color = isSelected ? colors.primary : 'white';
 	return (
 		<TouchableOpacity onPress={onPress} className="flex flex-row gap-4 p-4">
-			<View
-				style={{
-					height: 50,
-					width: 50,
-					borderRadius: 50,
-					overflow: 'hidden'
-				}}
-			>
+			<View className="w-[50px] h-[50px] rounded-[50px] overflow-hidden">
 				<VideoPlayer url={exercise.video} contentFit="cover" />
 			</View>
-
 			<View>
 				<Text className="text-white">{exercise.title}</Text>
 				<Text className="text-white/40">{exercise.primaryMuscle.name}</Text>

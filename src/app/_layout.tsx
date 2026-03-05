@@ -7,6 +7,8 @@ import { colors } from '@/constants/colors';
 import { Ionicons } from '@expo/vector-icons';
 import { useThemeColors } from '@/hooks';
 import '../../global.css';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 function RootLayout() {
 	const router = useRouter();
@@ -71,7 +73,11 @@ function RootLayout() {
 export default function AppLayout() {
 	return (
 		<AppContextProvider>
-			<RootLayout />
+			<GestureHandlerRootView style={{ flex: 1 }}>
+				<BottomSheetModalProvider>
+					<RootLayout />
+				</BottomSheetModalProvider>
+			</GestureHandlerRootView>
 		</AppContextProvider>
 	);
 }

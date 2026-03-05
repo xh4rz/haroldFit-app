@@ -1,14 +1,14 @@
 import { FlatList, View } from 'react-native';
-import { ExerciseResponse } from '@/infrastructure/interfaces';
+import { Exercise } from '@/infrastructure/interfaces';
 import { Separator, Text } from '@/components/atoms';
 import { ExerciseItem } from '@/components/molecules';
 
-type Props = {
-	data: ExerciseResponse[] | undefined;
+type ExerciseListProps = {
+	data: Exercise[] | undefined;
 	onPress: (id: string, title: string) => void;
 };
 
-export const ExerciseList = ({ data, onPress }: Props) => {
+export const ExerciseList = ({ data, onPress }: ExerciseListProps) => {
 	return (
 		<FlatList
 			data={data}
