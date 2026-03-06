@@ -1,11 +1,12 @@
 import { colors } from '@/constants/colors';
-import { AntDesign, MaterialIcons } from '@expo/vector-icons';
-import { Tabs, useSegments } from 'expo-router';
+import { MaterialIcons } from '@expo/vector-icons';
+import { Tabs, usePathname } from 'expo-router';
+import { BarbellIcon, HouseIcon, UserIcon } from 'phosphor-react-native';
 
 export default function TabsLayout() {
-	const segments = useSegments();
+	const pathName = usePathname();
 
-	const hideTabs = [...segments].includes('create');
+	const hideTabs = ['/routine/create'].includes(pathName);
 
 	return (
 		<Tabs
@@ -21,7 +22,8 @@ export default function TabsLayout() {
 				tabBarStyle: {
 					backgroundColor: colors.secondary,
 					display: hideTabs ? 'none' : 'flex'
-				}
+				},
+				popToTopOnBlur: true
 			}}
 			backBehavior="order"
 		>
@@ -32,11 +34,19 @@ export default function TabsLayout() {
 					headerShown: false,
 					popToTopOnBlur: true,
 					tabBarIcon: ({ focused }) => (
-						<AntDesign
-							name="home"
-							size={24}
-							color={focused ? colors.primary : 'white'}
-						/>
+						<HouseIcon size={24} color={focused ? colors.primary : 'white'} />
+					)
+				}}
+			/>
+
+			<Tabs.Screen
+				name="exercise"
+				options={{
+					title: 'exercise',
+					headerShown: false,
+					popToTopOnBlur: true,
+					tabBarIcon: ({ focused }) => (
+						<BarbellIcon size={24} color={focused ? colors.primary : 'white'} />
 					)
 				}}
 			/>
@@ -64,11 +74,7 @@ export default function TabsLayout() {
 					headerShown: false,
 					popToTopOnBlur: true,
 					tabBarIcon: ({ focused }) => (
-						<AntDesign
-							name="user"
-							size={24}
-							color={focused ? colors.primary : 'white'}
-						/>
+						<UserIcon size={24} color={focused ? colors.primary : 'white'} />
 					)
 				}}
 			/>

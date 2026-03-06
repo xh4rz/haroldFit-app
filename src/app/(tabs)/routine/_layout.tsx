@@ -12,6 +12,9 @@ export default function TrainingLayout() {
 				headerStyle: { backgroundColor: colors.primary },
 				headerTintColor: colors.secondary,
 				headerTitleAlign: 'center',
+				headerTitleStyle: {
+					color: 'white'
+				},
 				animation: 'slide_from_right',
 				contentStyle: {
 					backgroundColor: theme.background
@@ -25,12 +28,7 @@ export default function TrainingLayout() {
 
 			<Stack.Screen
 				name="create/index"
-				options={{ headerShown: true, title: 'Create Routine' }}
-			/>
-
-			<Stack.Screen
-				name="create/add-exercise/index"
-				options={{ headerShown: true, title: 'Add Exercise' }}
+				options={{ headerShown: true, title: 'Create Rutine' }}
 			/>
 		</Stack>
 	);

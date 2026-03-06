@@ -9,7 +9,7 @@ import { getMuscles } from '@/modules/routine/services/muscle';
 import { LoadingView } from '@/components/molecules';
 import { getEquipments } from '@/modules/routine/services/equipment';
 
-export const AddExercise = () => {
+export const ExerciseView = () => {
 	const router = useRouter();
 
 	const [showModalEquipment, setShowModalEquipment] = useState(false);
@@ -39,7 +39,7 @@ export const AddExercise = () => {
 
 	const handlePressExercise = (id: string, title: string) => {
 		router.push({
-			pathname: '/routine/create/add-exercise/[id]',
+			pathname: '/exercise/[id]',
 			params: { id, title }
 		});
 	};

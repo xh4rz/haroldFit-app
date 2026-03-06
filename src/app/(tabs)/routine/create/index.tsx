@@ -1,11 +1,11 @@
 import React from 'react';
-import { useRouter } from 'expo-router';
+// import { useRouter } from 'expo-router';
 import { Text, View } from 'react-native';
 import { BarbellIcon, PlusIcon } from 'phosphor-react-native';
 import { Button } from '@/components/atoms';
 
 export default function CreateRoutineRoute() {
-	const router = useRouter();
+	// const router = useRouter();
 	return (
 		<View className="flex-1 justify-center items-center gap-10 p-5">
 			<View className=" justify-center items-center gap-4">
@@ -18,7 +18,7 @@ export default function CreateRoutineRoute() {
 			<Button
 				title="Add Exercise"
 				variant="secondary"
-				onPress={() => router.push('/routine/create/add-exercise')}
+				// onPress={() => router.push('/routine/create/add-exercise')}
 				iconLeft={<PlusIcon size={18} />}
 			/>
 		</View>

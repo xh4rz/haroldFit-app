@@ -3,7 +3,7 @@ import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Button, Text } from '@/components/atoms';
 
-export default function TrainingScreen() {
+export default function RoutineScreen() {
 	const router = useRouter();
 
 	return (

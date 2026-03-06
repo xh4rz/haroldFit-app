@@ -7,7 +7,7 @@ import { getExerciseById } from '@/modules/routine/services/exercise';
 import { ExerciseDetail } from '@/components/organisms';
 import { LoadingView } from '@/components/molecules';
 
-export const AddExerciseDetail = () => {
+export const ExerciseDetailView = () => {
 	const { id } = useLocalSearchParams<{ id: string; title: string }>();
 
 	const {

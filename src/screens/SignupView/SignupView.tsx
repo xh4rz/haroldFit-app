@@ -15,7 +15,7 @@ import { SignInIcon } from 'phosphor-react-native';
 
 type SignupFormData = z.infer<typeof signupFormSchema>;
 
-export const Signup = () => {
+export const SignupView = () => {
 	const { register } = useAuthStore();
 
 	const [loading, setLoading] = useState(false);
