@@ -77,6 +77,7 @@ export const Button = ({
 					)}
 
 					<Text
+						numberOfLines={1}
 						className={`
 							${textVariants[variant]}
 							${sizes[size].text}

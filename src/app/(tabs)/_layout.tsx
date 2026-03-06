@@ -5,7 +5,7 @@ import { Tabs, useSegments } from 'expo-router';
 export default function TabsLayout() {
 	const segments = useSegments();
 
-	const hideTabs = [...segments].includes('create-routine');
+	const hideTabs = [...segments].includes('create');
 
 	return (
 		<Tabs

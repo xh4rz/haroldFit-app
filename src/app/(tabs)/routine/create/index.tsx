@@ -18,7 +18,7 @@ export default function CreateRoutineRoute() {
 			<Button
 				title="Add Exercise"
 				variant="secondary"
-				onPress={() => router.push('/routine/create-routine/add-exercise')}
+				onPress={() => router.push('/routine/create/add-exercise')}
 				iconLeft={<PlusIcon size={18} />}
 			/>
 		</View>

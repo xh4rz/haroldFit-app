@@ -4,3 +4,4 @@ export * from './Separator';
 export * from './Text';
 export * from './IconButton';
 export * from './Video';
+export * from './Image';

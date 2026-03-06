@@ -1,7 +1,6 @@
 import React from 'react';
-import { Text } from '@/components/atoms';
+import { Image, Text } from '@/components/atoms';
 import { colors } from '@/constants/colors';
-import { Image } from 'expo-image';
 import { CheckIcon } from 'phosphor-react-native';
 import { TouchableOpacity, View } from 'react-native';
 
@@ -32,15 +31,7 @@ export const SelectListItem = <T extends BaseSelectItem>({
 			onPress={() => onPress(item.id)}
 		>
 			<View className="w-[50px] h-[50px] rounded-[50px] overflow-hidden bg-white">
-				<Image
-					style={{
-						width: '100%',
-						height: '100%',
-						transform: [{ scale: imageScale }]
-					}}
-					source={item.imageUrl}
-					contentFit="cover"
-				/>
+				<Image url={item.imageUrl} imageScale={imageScale} />
 			</View>
 			<Text className="flex-1">{item.name}</Text>
 			{isSelected && (

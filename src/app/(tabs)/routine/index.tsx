@@ -14,7 +14,7 @@ export default function TrainingScreen() {
 				title="New Routine"
 				bg="bg-zinc-800"
 				fullWidth={false}
-				onPress={() => router.push('/routine/create-routine')}
+				onPress={() => router.push('/routine/create')}
 				iconLeft={
 					<MaterialCommunityIcons name="file-document-plus-outline" size={24} />
 				}

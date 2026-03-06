@@ -1,7 +1,7 @@
 import { TouchableOpacity, View } from 'react-native';
-import { Text } from '@/components/atoms';
-import { VideoPlayer } from '../VideoPlayer';
+import { Image, Text } from '@/components/atoms';
 import { Exercise } from '@/infrastructure/interfaces';
+import { useThumbnail } from '@/hooks';
 
 type ExerciseItemProps = {
 	exercise: Exercise;
@@ -18,10 +18,13 @@ export const ExerciseItem = ({
 }: ExerciseItemProps) => {
 	// const isSelected = item.id === selectedId;
 	// 	const color = isSelected ? colors.primary : 'white';
+
+	const thumbnail = useThumbnail(exercise.video);
+
 	return (
 		<TouchableOpacity onPress={onPress} className="flex flex-row gap-4 p-4">
 			<View className="w-[50px] h-[50px] rounded-[50px] overflow-hidden">
-				<VideoPlayer url={exercise.video} contentFit="cover" />
+				<Image url={thumbnail} />
 			</View>
 			<View>
 				<Text className="text-white">{exercise.title}</Text>

@@ -39,7 +39,7 @@ export const AddExercise = () => {
 
 	const handlePressExercise = (id: string, title: string) => {
 		router.push({
-			pathname: '/routine/create-routine/add-exercise/[id]',
+			pathname: '/routine/create/add-exercise/[id]',
 			params: { id, title }
 		});
 	};

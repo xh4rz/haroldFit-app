@@ -24,12 +24,12 @@ export default function TrainingLayout() {
 			/>
 
 			<Stack.Screen
-				name="create-routine/index"
+				name="create/index"
 				options={{ headerShown: true, title: 'Create Routine' }}
 			/>
 
 			<Stack.Screen
-				name="create-routine/add-exercise/index"
+				name="create/add-exercise/index"
 				options={{ headerShown: true, title: 'Add Exercise' }}
 			/>
 		</Stack>
