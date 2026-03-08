@@ -62,10 +62,11 @@ export const IconButton = ({
 				<View>
 					{cloneElement(icon, {
 						size: icon.props.size ?? sizesIcon[size],
-						color:
-							(icon.props.color ?? ['primary', 'secondary'].includes(variant))
-								? 'white'
-								: 'black'
+						color: icon.props.color
+						// color:
+						// 	(icon.props.color ?? ['primary', 'secondary'].includes(variant))
+						// 		? 'white'
+						// 		: 'black'
 					})}
 				</View>
 			)}

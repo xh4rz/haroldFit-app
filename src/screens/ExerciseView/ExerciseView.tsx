@@ -16,9 +16,9 @@ export const ExerciseView = () => {
 
 	const [showModalMuscle, setShowModalMuscle] = useState(false);
 
-	const [idMuscle, setIdMuscle] = useState(1);
+	const [equipmentId, setEquipmentId] = useState<number>(1);
 
-	const [idEquipment, setIdEquipment] = useState(1);
+	const [muscleId, setMuscleId] = useState<number>(1);
 
 	const { data: dataExercises, isPending: isPendingExercises } = useQuery({
 		queryKey: ['exercises'],
@@ -44,21 +44,9 @@ export const ExerciseView = () => {
 		});
 	};
 
-	const handlePressEquipment = (id: number) => {
-		setIdEquipment(id);
-		setShowModalEquipment(false);
-	};
+	const findMuscle = dataMuscles?.find((i) => i.id === muscleId);
 
-	const handlePressMuscle = (id: number) => {
-		setIdMuscle(id);
-		setShowModalMuscle(false);
-	};
-
-	const findMuscle = dataMuscles?.find((muscle) => muscle.id === idMuscle);
-
-	const findEquipment = dataEquipments?.find(
-		(equipment) => equipment.id === idEquipment
-	);
+	const findEquipment = dataEquipments?.find((i) => i.id === equipmentId);
 
 	if (isPendingExercises) {
 		return <LoadingView titleLoading="exercises" />;
@@ -92,22 +80,22 @@ export const ExerciseView = () => {
 			<ExerciseList data={dataExercises} onPress={handlePressExercise} />
 
 			<BottomSheetSelectList
-				title="Eqipments"
+				title="Equipments"
 				data={dataEquipments}
-				onPress={handlePressEquipment}
 				show={showModalEquipment}
 				setShow={setShowModalEquipment}
-				idSelected={idEquipment}
+				selectedIds={equipmentId ? [equipmentId] : []}
+				onChange={(ids) => setEquipmentId(ids[0])}
 				imageScale={0.6}
 			/>
 
 			<BottomSheetSelectList
 				title="Muscles"
 				data={dataMuscles}
-				onPress={handlePressMuscle}
 				show={showModalMuscle}
 				setShow={setShowModalMuscle}
-				idSelected={idMuscle}
+				selectedIds={muscleId ? [muscleId] : []}
+				onChange={(ids) => setMuscleId(ids[0])}
 				imageScale={1.2}
 			/>
 		</View>

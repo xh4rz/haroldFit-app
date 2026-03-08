@@ -13,35 +13,52 @@ type BaseSelectItem = {
 
 type BottomSheetSelectListProps<T extends BaseSelectItem> = {
 	title: string;
-	data: T[] | undefined;
-	onPress: (id: number) => void;
+	data?: T[];
 	show: boolean;
 	setShow: (value: boolean) => void;
-	idSelected: number;
+	selectedIds: number[];
+	onChange: (ids: number[]) => void;
 	imageScale?: number;
+	multiple?: boolean;
 };
 
 export const BottomSheetSelectList = <T extends BaseSelectItem>({
 	title,
 	data,
-	onPress,
 	show,
 	setShow,
-	idSelected,
-	imageScale = 1
+	selectedIds,
+	onChange,
+	imageScale = 1,
+	multiple = false
 }: BottomSheetSelectListProps<T>) => {
 	const insets = useSafeAreaInsets();
+
+	const onPress = (id: number) => {
+		if (!multiple) {
+			onChange([id]);
+			setShow(false);
+			return;
+		}
+
+		const newIds = selectedIds.includes(id)
+			? selectedIds.filter((i) => i !== id)
+			: [...selectedIds, id];
+
+		onChange(newIds);
+	};
 
 	return (
 		<BottomSheetModalList title={title} show={show} setShow={setShow}>
 			<BottomSheetFlatList
 				data={data}
-				keyExtractor={(item: T) => item.id}
+				keyExtractor={(item: T) => item.id.toString()}
 				renderItem={({ item }: { item: T }) => (
 					<SelectListItem
 						item={item}
+						selectedIds={selectedIds}
 						onPress={onPress}
-						idSelected={idSelected}
+						multiple={multiple}
 						imageScale={imageScale}
 					/>
 				)}

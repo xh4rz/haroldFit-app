@@ -10,6 +10,8 @@ import {
 import { ThemeContext } from '../../../context/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 
+type Variant = 'outlined' | 'line';
+
 interface InputProps extends Omit<TextInputProps, 'onChangeText' | 'value'> {
 	control: Control<any>;
 	name: string;
@@ -19,6 +21,7 @@ interface InputProps extends Omit<TextInputProps, 'onChangeText' | 'value'> {
 	required?: boolean;
 	disabled?: boolean;
 	isPassword?: boolean;
+	variant?: Variant;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -30,6 +33,7 @@ export const Input: React.FC<InputProps> = ({
 	required = false,
 	disabled = false,
 	isPassword = false,
+	variant = 'outlined',
 	...textInputProps
 }) => {
 	const { theme } = useContext(ThemeContext);
@@ -38,11 +42,8 @@ export const Input: React.FC<InputProps> = ({
 
 	const getBorderColor = () => {
 		if (error && isFocused) return 'border-red-700';
-
 		if (error) return 'border-red-500';
-
 		if (isFocused) return 'border-purple-600';
-
 		return theme === 'dark' ? 'border-gray-600' : 'border-gray-300';
 	};
 
@@ -50,14 +51,48 @@ export const Input: React.FC<InputProps> = ({
 		if (error) {
 			return theme === 'dark' ? 'bg-red-900/20' : 'bg-red-50';
 		}
-
 		return theme === 'dark' ? 'bg-gray-700' : 'bg-gray-50';
 	};
 
-	// transition-all duration-300
+	const getVariantStyles = () => {
+		if (variant === 'outlined') {
+			return `
+        min-h-14 px-4 pt-6 pb-2 border-2 rounded-xl
+        ${getBorderColor()}
+        ${getBackgroundColor()}
+      `;
+		}
+
+		if (variant === 'line') {
+			return `
+        pb-2 border-b
+        ${getBorderColor()}
+      `;
+		}
+	};
 
 	return (
 		<View className="w-full mb-4">
+			{variant === 'line' && label && (
+				<Text
+					className={`text-sm ${
+						error
+							? 'text-red-500'
+							: theme === 'dark'
+								? 'text-gray-400'
+								: 'text-gray-600'
+					}`}
+				>
+					{label}
+					{required && (
+						<Text className={`${error ? 'text-red-500' : 'text-purple-600'}`}>
+							{' '}
+							*
+						</Text>
+					)}
+				</Text>
+			)}
+
 			<View className="relative">
 				<Controller
 					control={control}
@@ -67,18 +102,17 @@ export const Input: React.FC<InputProps> = ({
 							<TextInput
 								ref={ref}
 								editable={!disabled}
+								value={value}
+								onChangeText={onChange}
 								onFocus={() => setIsFocused(true)}
 								onBlur={() => setIsFocused(false)}
-								onChangeText={onChange}
-								value={value}
 								secureTextEntry={isPassword && !showPassword}
 								className={`
-								h-14 w-full rounded-xl text-base px-4 pt-6 pb-2 border-2
-								${getBorderColor()}
-								${getBackgroundColor()}
-								${disabled ? 'opacity-60' : 'opacity-100'}
-								${theme === 'dark' ? 'text-white' : 'text-gray-900'}
-                				`}
+                  w-full text-base
+                  ${getVariantStyles()}
+                  ${disabled ? 'opacity-60' : 'opacity-100'}
+                  ${theme === 'dark' ? 'text-white' : 'text-gray-900'}
+                `}
 								placeholderTextColor={theme === 'dark' ? '#9CA3AF' : '#6B7280'}
 								{...textInputProps}
 							/>
@@ -86,9 +120,7 @@ export const Input: React.FC<InputProps> = ({
 							{isPassword && (
 								<TouchableOpacity
 									onPress={() => setShowPassword(!showPassword)}
-									className={`absolute right-4 top-1/2 -translate-y-1/2 ${
-										disabled ? 'opacity-60' : 'opacity-100'
-									}`}
+									className="absolute right-3 top-1/2 -translate-y-1/2"
 									disabled={disabled}
 								>
 									<Ionicons
@@ -99,7 +131,7 @@ export const Input: React.FC<InputProps> = ({
 								</TouchableOpacity>
 							)}
 
-							{label && (
+							{variant === 'outlined' && label && (
 								<Text
 									className={`absolute top-2 left-4 text-xs font-medium
                     ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Image, Text } from '@/components/atoms';
+import { TouchableOpacity, View } from 'react-native';
+import { Checkbox, Image, Text } from '@/components/atoms';
 import { colors } from '@/constants/colors';
 import { CheckIcon } from 'phosphor-react-native';
-import { TouchableOpacity, View } from 'react-native';
 
 type BaseSelectItem = {
 	id: number;
@@ -12,18 +12,20 @@ type BaseSelectItem = {
 
 type SelectListItemProps<T extends BaseSelectItem> = {
 	item: T;
+	selectedIds: number[];
 	onPress: (id: number) => void;
-	idSelected: number;
+	multiple?: boolean;
 	imageScale?: number;
 };
 
 export const SelectListItem = <T extends BaseSelectItem>({
 	item,
-	idSelected,
+	selectedIds,
 	onPress,
+	multiple = false,
 	imageScale = 1
 }: SelectListItemProps<T>) => {
-	const isSelected = item.id === idSelected;
+	const isSelected = selectedIds.includes(item.id);
 
 	return (
 		<TouchableOpacity
@@ -34,10 +36,19 @@ export const SelectListItem = <T extends BaseSelectItem>({
 				<Image url={item.imageUrl} imageScale={imageScale} />
 			</View>
 			<Text className="flex-1">{item.name}</Text>
-			{isSelected && (
-				<View className="w-16 items-center">
-					<CheckIcon color={colors.secondary} />
-				</View>
+
+			{multiple ? (
+				<Checkbox
+					isChecked={isSelected}
+					onChange={() => onPress(item.id)}
+					className="mr-2"
+				/>
+			) : (
+				isSelected && (
+					<View className="w-16 items-center">
+						<CheckIcon color={colors.secondary} />
+					</View>
+				)
 			)}
 		</TouchableOpacity>
 	);
