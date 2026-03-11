@@ -7,20 +7,24 @@ import {
 	ExerciseCreateFormData,
 	exerciseCreateFormSchema
 } from '@/modules/exercise/exerciseCreateFormSchema';
-import { useAuthStore } from '@/modules/auth/store/useAuthStore';
 import { Button, Input, Separator } from '@/components/atoms';
 import { SignInIcon } from 'phosphor-react-native';
-import { ExerciseInstructions, SelectField } from '@/components/molecules';
-import { colors } from '@/constants/colors';
+import {
+	ExerciseInstructions,
+	ExerciseVideoUpload,
+	SelectField
+} from '@/components/molecules';
 import { BottomSheetSelectList } from '@/components/organisms';
-import { getEquipments } from '@/modules/routine/services/equipment';
+import { getEquipments } from '@/modules/exercise/services/equipment';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getMuscles } from '@/modules/routine/services/muscle';
+import { getMuscles } from '@/modules/exercise/services/muscle';
+import { usePickVideo } from '@/hooks';
+import { postExercise } from '@/modules/exercise/services/exercise';
 
 export const ExerciseCreateView = () => {
 	const router = useRouter();
-	const { login } = useAuthStore();
-	const [loading, setLoading] = useState(false);
+
+	const queryClient = useQueryClient();
 
 	const {
 		control,
@@ -29,7 +33,7 @@ export const ExerciseCreateView = () => {
 		clearErrors,
 		setValue,
 		watch,
-		getValues,
+
 		formState: { errors }
 	} = useForm<ExerciseCreateFormData>({
 		resolver: zodResolver(exerciseCreateFormSchema),
@@ -40,9 +44,11 @@ export const ExerciseCreateView = () => {
 			primaryMuscleId: 0,
 			secondaryMuscleIds: [],
 			instruction: [],
-			file: {}
+			file: undefined
 		}
 	});
+
+	const [loading, setLoading] = useState(false);
 
 	const [showModalEquipment, setShowModalEquipment] = useState(false);
 
@@ -50,33 +56,6 @@ export const ExerciseCreateView = () => {
 
 	const [showModalSecondaryMuscle, setShowModalSecondaryMuscle] =
 		useState(false);
-
-	const onLogin = async (data: ExerciseCreateFormData) => {
-		// setLoading(true);
-		// clearErrors('root');
-		// try {
-		// 	await login(data.email, data.password);
-		// } catch {
-		// 	setError('root', {
-		// 		type: 'custom',
-		// 		message: 'Invalid credentials'
-		// 	});
-		// } finally {
-		// 	setLoading(false);
-		// }
-	};
-
-	// useEffect(() => {
-	// 	const subscription = watch(() => {
-	// 		if (errors.root) {
-	// 			clearErrors('root');
-	// 		}
-	// 	});
-
-	// 	return () => subscription.unsubscribe();
-	// }, [watch, errors.root, clearErrors]);
-
-	const queryClient = useQueryClient();
 
 	const { data: dataEquipments } = useQuery({
 		queryKey: ['equipments'],
@@ -139,10 +118,66 @@ export const ExerciseCreateView = () => {
 
 	const primaryMuscleError = errors.primaryMuscleId?.message;
 
-	console.log({ values: getValues() });
+	const { openPicker, video, loadingVideo } = usePickVideo((video) => {
+		setValue('file', video, { shouldValidate: true });
+		clearErrors('file');
+	});
+
+	const onSaveExercise = async (data: ExerciseCreateFormData) => {
+		setLoading(true);
+
+		try {
+			const formData = new FormData();
+
+			formData.append('title', data.title);
+			formData.append('equipmentId', String(data.equipmentId));
+			formData.append('primaryMuscleId', String(data.primaryMuscleId));
+
+			if (data.secondaryMuscleIds) {
+				formData.append(
+					'secondaryMuscleIds',
+					JSON.stringify(data.secondaryMuscleIds)
+				);
+			}
+
+			const instructions = data.instruction.map((i) => i.text);
+			formData.append('instruction', JSON.stringify(instructions));
+
+			if (data.file) {
+				formData.append('file', {
+					uri: data.file.uri,
+					name: data.file.fileName,
+					type: data.file.mimeType
+				} as any);
+			}
+
+			// todo: hacer sistema de notificaciones only front
+			const response = await postExercise(formData);
+
+			await queryClient.invalidateQueries({
+				queryKey: ['exercises']
+			});
+
+			router.back();
+		} catch {
+			setError('root', {
+				type: 'custom',
+				message: 'Something went wrong while creating the exercise'
+			});
+		} finally {
+			setLoading(false);
+		}
+	};
 
 	return (
 		<View className="flex-1 m-6">
+			<ExerciseVideoUpload
+				videoUri={video?.uri ?? ''}
+				openPicker={openPicker}
+				loading={loadingVideo}
+				error={errors.file}
+			/>
+
 			<Input
 				autoFocus
 				required
@@ -183,15 +218,15 @@ export const ExerciseCreateView = () => {
 
 			<Separator />
 
-			<ExerciseInstructions control={control} errors={errors.instruction} />
+			<ExerciseInstructions control={control} error={errors.instruction} />
 
 			<Separator />
 
 			<Button
 				title="Save"
-				variant="outline"
-				onPress={handleSubmit(onLogin)}
-				iconLeft={<SignInIcon color={colors.primary} />}
+				variant="primary"
+				onPress={handleSubmit(onSaveExercise)}
+				iconLeft={<SignInIcon />}
 				className="mt-5"
 				loading={loading}
 			/>

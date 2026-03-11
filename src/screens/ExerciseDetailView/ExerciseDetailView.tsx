@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
 import { Text } from '@/components/atoms';
-import { getExerciseById } from '@/modules/routine/services/exercise';
+import { getExerciseById } from '@/modules/exercise/services/exercise';
 import { ExerciseDetail } from '@/components/organisms';
 import { LoadingView } from '@/components/molecules';
 

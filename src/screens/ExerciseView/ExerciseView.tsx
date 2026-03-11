@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
-import { getExercises } from '@/modules/routine/services/exercise';
 import { BottomSheetSelectList, ExerciseList } from '@/components/organisms';
 import { Button } from '@/components/atoms';
-import { getMuscles } from '@/modules/routine/services/muscle';
 import { LoadingView } from '@/components/molecules';
-import { getEquipments } from '@/modules/routine/services/equipment';
+import { getExercises } from '@/modules/exercise/services/exercise';
+import { getMuscles } from '@/modules/exercise/services/muscle';
+import { getEquipments } from '@/modules/exercise/services/equipment';
 
 export const ExerciseView = () => {
 	const router = useRouter();

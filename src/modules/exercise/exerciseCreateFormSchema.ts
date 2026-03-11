@@ -1,8 +1,10 @@
 import { z } from 'zod';
+import * as ImagePicker from 'expo-image-picker';
 
 export const exerciseCreateFormSchema = z.object({
 	title: z
 		.string()
+		.min(1, { message: 'Exercise name is required' })
 		.min(6, { message: 'Exercise name must be at least 6 characters' }),
 
 	equipmentId: z.number().min(1, {
@@ -34,13 +36,15 @@ export const exerciseCreateFormSchema = z.object({
 		.min(1, { message: 'At least one instruction is required' }),
 
 	file: z
-		.object({
-			uri: z.string(),
-			name: z.string(),
-			type: z.string()
+		.custom<ImagePicker.ImagePickerAsset>()
+		.refine((file) => !!file, {
+			message: 'Video is required'
 		})
-		.refine((file) => file.type.startsWith('video/'), {
+		.refine((file) => file?.mimeType?.startsWith('video/'), {
 			message: 'File must be a video'
+		})
+		.refine((file) => (file?.fileSize ?? 0) <= 2 * 1024 * 1024, {
+			message: 'Video must be smaller than 2MB'
 		})
 });
 

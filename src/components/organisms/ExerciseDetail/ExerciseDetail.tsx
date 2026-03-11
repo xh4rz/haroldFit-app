@@ -11,7 +11,7 @@ export const ExerciseDetail = ({ exercise }: ExerciseDetailProps) => {
 	return (
 		<View>
 			<View className="h-72">
-				<VideoPlayer url={exercise.video} autoPlayLoop />
+				<VideoPlayer url={exercise.video} autoPlay loop />
 			</View>
 
 			<View className="m-5">

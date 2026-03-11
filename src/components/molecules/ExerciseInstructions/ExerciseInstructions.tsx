@@ -13,20 +13,20 @@ import { ExerciseCreateFormData } from '@/modules/exercise/exerciseCreateFormSch
 
 interface ExerciseInstructionsProps {
 	control: Control<ExerciseCreateFormData>;
-	errors: FieldErrors<ExerciseCreateFormData>['instruction'];
+	error: FieldErrors<ExerciseCreateFormData>['instruction'];
 	// errors: FieldErrors<ExerciseCreateFormData>;
 }
 
 export const ExerciseInstructions = ({
 	control,
-	errors
+	error
 }: ExerciseInstructionsProps) => {
 	const { fields, append, remove } = useFieldArray({
 		control,
 		name: 'instruction'
 	});
 
-	const errorsMessage = errors?.message || errors?.root?.message;
+	const errorsMessage = error?.message || error?.root?.message;
 
 	return (
 		<View className="gap-3 my-5">
@@ -46,7 +46,7 @@ export const ExerciseInstructions = ({
 
 			{fields.map((field, index) => {
 				// const errorMessage = errors?.[index]?.message;
-				const errorMessage = errors?.[index]?.text?.message;
+				const errorMessage = error?.[index]?.text?.message;
 				return (
 					<View key={field.id} className="flex-row items-center gap-2">
 						<Text className="font-semibold w-6 text-center">{index + 1}.</Text>

@@ -11,4 +11,5 @@ export interface Exercise {
 interface OptionItem {
 	id: number;
 	name: string;
+	imageUrl: string;
 }
