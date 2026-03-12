@@ -1,14 +1,13 @@
-import { useState } from 'react';
-import { useRouter } from 'expo-router';
+import { useLayoutEffect, useState } from 'react';
+import { useNavigation, useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Keyboard, View } from 'react-native';
+import { View } from 'react-native';
 import {
 	ExerciseCreateFormData,
 	exerciseCreateFormSchema
 } from '@/modules/exercise/exerciseCreateFormSchema';
 import { Button, Input, Separator } from '@/components/atoms';
-import { SignInIcon } from 'phosphor-react-native';
 import {
 	ExerciseInstructions,
 	ExerciseVideoUpload,
@@ -23,6 +22,8 @@ import { postExercise } from '@/modules/exercise/services/exercise';
 
 export const ExerciseCreateView = () => {
 	const router = useRouter();
+
+	const navigation = useNavigation();
 
 	const queryClient = useQueryClient();
 
@@ -68,21 +69,6 @@ export const ExerciseCreateView = () => {
 		queryFn: getMuscles,
 		initialData: () => queryClient.getQueryData(['muscles'])
 	});
-
-	const handlePressEquipment = () => {
-		Keyboard.dismiss();
-		setShowModalEquipment(true);
-	};
-
-	const handlePressPrimaryMuscle = () => {
-		Keyboard.dismiss();
-		setShowModalPrimaryMuscle(true);
-	};
-
-	const handlePressSecondaryMuscle = () => {
-		Keyboard.dismiss();
-		setShowModalSecondaryMuscle(true);
-	};
 
 	const equipmentId = watch('equipmentId');
 
@@ -151,8 +137,7 @@ export const ExerciseCreateView = () => {
 				} as any);
 			}
 
-			// todo: hacer sistema de notificaciones only front
-			const response = await postExercise(formData);
+			await postExercise(formData);
 
 			await queryClient.invalidateQueries({
 				queryKey: ['exercises']
@@ -169,8 +154,23 @@ export const ExerciseCreateView = () => {
 		}
 	};
 
+	useLayoutEffect(() => {
+		navigation.setOptions({
+			headerRight: () => (
+				<Button
+					title="Save"
+					variant="secondary"
+					fullWidth={false}
+					textClassName="text-secondary font-bold"
+					onPress={handleSubmit(onSaveExercise)}
+					loading={loading}
+				/>
+			)
+		});
+	}, []);
+
 	return (
-		<View className="flex-1 m-6">
+		<View className="m-6">
 			<ExerciseVideoUpload
 				videoUri={video?.uri ?? ''}
 				openPicker={openPicker}
@@ -179,7 +179,6 @@ export const ExerciseCreateView = () => {
 			/>
 
 			<Input
-				autoFocus
 				required
 				autoCapitalize="none"
 				control={control}
@@ -195,7 +194,7 @@ export const ExerciseCreateView = () => {
 				label="Equipment"
 				value={equipmentText}
 				error={equipmentError}
-				onPress={handlePressEquipment}
+				onPress={() => setShowModalEquipment(true)}
 			/>
 
 			<Separator />
@@ -205,7 +204,7 @@ export const ExerciseCreateView = () => {
 				label="Primary Muscle"
 				value={primaryMuscleText}
 				error={primaryMuscleError}
-				onPress={handlePressPrimaryMuscle}
+				onPress={() => setShowModalPrimaryMuscle(true)}
 			/>
 
 			<Separator />
@@ -213,7 +212,7 @@ export const ExerciseCreateView = () => {
 			<SelectField
 				label="Secondary Muscle (optional)"
 				value={secondaryMuscleText}
-				onPress={handlePressSecondaryMuscle}
+				onPress={() => setShowModalSecondaryMuscle(true)}
 			/>
 
 			<Separator />
@@ -221,15 +220,6 @@ export const ExerciseCreateView = () => {
 			<ExerciseInstructions control={control} error={errors.instruction} />
 
 			<Separator />
-
-			<Button
-				title="Save"
-				variant="primary"
-				onPress={handleSubmit(onSaveExercise)}
-				iconLeft={<SignInIcon />}
-				className="mt-5"
-				loading={loading}
-			/>
 
 			<BottomSheetSelectList
 				title="Equipments"

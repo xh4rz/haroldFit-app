@@ -23,7 +23,8 @@ export default function TabsLayout() {
 					backgroundColor: colors.secondary,
 					display: hideTabs ? 'none' : 'flex'
 				},
-				popToTopOnBlur: true
+				popToTopOnBlur: true,
+				tabBarHideOnKeyboard: true
 			}}
 			backBehavior="order"
 		>

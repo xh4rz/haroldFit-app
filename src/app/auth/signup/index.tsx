@@ -1,10 +1,10 @@
+import { ScrollViewLayout } from '@/components/templates';
 import { SignupView } from '@/screens/SignupView';
-import { KeyboardLayout } from '@/components/templates';
 
 export default function SignupScreen() {
 	return (
-		<KeyboardLayout>
+		<ScrollViewLayout>
 			<SignupView />
-		</KeyboardLayout>
+		</ScrollViewLayout>
 	);
 }

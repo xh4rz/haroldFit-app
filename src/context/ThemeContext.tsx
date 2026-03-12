@@ -17,7 +17,7 @@ export const ThemeContext = createContext<ThemeContextType>({
 	setTheme: () => {}
 });
 
-export function ThemeContextProvider({ children }: { children: ReactNode }) {
+export const ThemeContextProvider = ({ children }: { children: ReactNode }) => {
 	const { colorScheme, setColorScheme } = useColorScheme();
 
 	const [selectedTheme, setSelectedTheme] = useState<ThemeName>('system');
@@ -69,4 +69,4 @@ export function ThemeContextProvider({ children }: { children: ReactNode }) {
 			{children}
 		</ThemeContext.Provider>
 	);
-}
+};

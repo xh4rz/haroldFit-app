@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Separator } from '@/components/atoms';
 import { SelectListItem } from '@/components/molecules';
 import { BottomSheetModalList } from '../BottomSheetModalList';
+import { Keyboard } from 'react-native';
 
 type BaseSelectItem = {
 	id: number;
@@ -48,6 +49,14 @@ export const BottomSheetSelectList = <T extends BaseSelectItem>({
 		onChange(newIds);
 	};
 
+	useEffect(() => {
+		if (show) {
+			const timeout = setTimeout(() => {
+				Keyboard.dismiss();
+			}, 300);
+			return () => clearTimeout(timeout);
+		}
+	}, [show]);
 	return (
 		<BottomSheetModalList title={title} show={show} setShow={setShow}>
 			<BottomSheetFlatList

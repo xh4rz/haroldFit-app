@@ -1,5 +1,9 @@
 import React, { ReactNode } from 'react';
-import { ReactQueryContextProvider, ThemeContextProvider } from './';
+import {
+	KeyboardContextProvider,
+	ReactQueryContextProvider,
+	ThemeContextProvider
+} from './';
 
 interface AppContextProps {
 	children: ReactNode;
@@ -7,8 +11,10 @@ interface AppContextProps {
 
 export function AppContextProvider({ children }: AppContextProps) {
 	return (
-		<ReactQueryContextProvider>
-			<ThemeContextProvider>{children}</ThemeContextProvider>
-		</ReactQueryContextProvider>
+		<KeyboardContextProvider>
+			<ReactQueryContextProvider>
+				<ThemeContextProvider>{children}</ThemeContextProvider>
+			</ReactQueryContextProvider>
+		</KeyboardContextProvider>
 	);
 }

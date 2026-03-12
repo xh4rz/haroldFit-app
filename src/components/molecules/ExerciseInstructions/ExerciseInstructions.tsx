@@ -14,7 +14,6 @@ import { ExerciseCreateFormData } from '@/modules/exercise/exerciseCreateFormSch
 interface ExerciseInstructionsProps {
 	control: Control<ExerciseCreateFormData>;
 	error: FieldErrors<ExerciseCreateFormData>['instruction'];
-	// errors: FieldErrors<ExerciseCreateFormData>;
 }
 
 export const ExerciseInstructions = ({
@@ -39,13 +38,11 @@ export const ExerciseInstructions = ({
 					iconLeft={<PlusIcon color={colors.primary} />}
 					className="py-0.5 px-2"
 					fullWidth={false}
-					// onPress={() => append('')}
 					onPress={() => append({ text: '' })}
 				/>
 			</View>
 
 			{fields.map((field, index) => {
-				// const errorMessage = errors?.[index]?.message;
 				const errorMessage = error?.[index]?.text?.message;
 				return (
 					<View key={field.id} className="flex-row items-center gap-2">
@@ -54,7 +51,6 @@ export const ExerciseInstructions = ({
 						<View className="flex-1">
 							<Controller
 								control={control}
-								// name={`instruction.${index}`}
 								name={`instruction.${index}.text`}
 								render={({ field: { onChange, value } }) => (
 									<TextInput
@@ -86,10 +82,6 @@ export const ExerciseInstructions = ({
 					</View>
 				);
 			})}
-
-			{/* {errors?.message && (
-				<Text className="text-red-500">{errors.message}</Text>
-			)} */}
 
 			{errorsMessage && (
 				<Text className="text-red-500 mt-2">{errorsMessage}</Text>

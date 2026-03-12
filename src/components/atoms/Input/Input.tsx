@@ -7,7 +7,7 @@ import {
 	View,
 	TouchableOpacity
 } from 'react-native';
-import { ThemeContext } from '../../../context/ThemeContext';
+import { ThemeContext } from '@/context';
 import { Ionicons } from '@expo/vector-icons';
 
 type Variant = 'outlined' | 'line';

@@ -50,7 +50,10 @@ export default function ExerciseLayout() {
 
 			<Stack.Screen
 				name="create/index"
-				options={{ headerShown: true, title: 'Create Exercise' }}
+				options={{
+					headerShown: true,
+					title: 'Create Exercise'
+				}}
 			/>
 		</Stack>
 	);

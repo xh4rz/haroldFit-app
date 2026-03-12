@@ -33,7 +33,7 @@ export default function ExerciseRoute() {
 							});
 
 							router.back();
-						} catch (error) {}
+						} catch {}
 					}
 				}
 			]

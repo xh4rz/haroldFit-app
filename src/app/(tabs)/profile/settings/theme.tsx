@@ -1,5 +1,5 @@
 import { Separator } from '@/components/atoms/Separator/Separator';
-import { ThemeContext, ThemeName } from '@/context/ThemeContext';
+import { ThemeContext, ThemeName } from '@/context';
 import { Feather } from '@expo/vector-icons';
 import { useContext } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';

@@ -1,10 +1,10 @@
+import { ScrollViewLayout } from '@/components/templates';
 import { LoginView } from '@/screens/LoginView';
-import { KeyboardLayout } from '@/components/templates';
 
 export default function LoginScreen() {
 	return (
-		<KeyboardLayout>
+		<ScrollViewLayout>
 			<LoginView />
-		</KeyboardLayout>
+		</ScrollViewLayout>
 	);
 }
