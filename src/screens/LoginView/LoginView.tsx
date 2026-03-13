@@ -8,6 +8,8 @@ import { loginFormSchema } from '@/modules/auth/validation/loginFormSchema';
 import { useAuthStore } from '@/modules/auth/store/useAuthStore';
 import { Button, Input, Text } from '@/components/atoms';
 import { SignInIcon } from 'phosphor-react-native';
+import { ApiError } from '@/infrastructure/interfaces';
+import { setFormError } from '@/utils';
 
 type LoginFormData = z.infer<typeof loginFormSchema>;
 
@@ -34,14 +36,22 @@ export const LoginView = () => {
 
 	const onLogin = async (data: LoginFormData) => {
 		setLoading(true);
-		clearErrors('root');
+
 		try {
 			await login(data.email, data.password);
-		} catch {
-			setError('root', {
-				type: 'custom',
-				message: 'Invalid credentials'
-			});
+		} catch (error) {
+			const errorObj = error as ApiError;
+
+			if (errorObj.statusCode === 401) {
+				setError('root', {
+					type: 'custom',
+					message: 'Invalid credentials'
+				});
+
+				return;
+			}
+
+			setFormError(setError, error);
 		} finally {
 			setLoading(false);
 		}
@@ -90,7 +100,7 @@ export const LoginView = () => {
 			/>
 
 			{errors.root && (
-				<Text className="text-red-500">{errors.root.message}</Text>
+				<Text className="text-red-500 mb-4">{errors.root.message}</Text>
 			)}
 
 			<TouchableOpacity className="items-end">

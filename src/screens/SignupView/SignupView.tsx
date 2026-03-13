@@ -12,6 +12,7 @@ import {
 import { Input } from '@/components/atoms/Input/Input';
 import { Button, Text } from '@/components/atoms';
 import { SignInIcon } from 'phosphor-react-native';
+import { setFormError } from '@/utils';
 
 type SignupFormData = z.infer<typeof signupFormSchema>;
 
@@ -50,12 +51,8 @@ export const SignupView = () => {
 		clearErrors('root');
 		try {
 			await register(data.fullName, data.email, data.password);
-		} catch (error: any) {
-			const errorObject = JSON.parse(error.message);
-			setError('root', {
-				type: 'custom',
-				message: errorObject.message
-			});
+		} catch (error) {
+			setFormError(setError, error);
 		} finally {
 			setLoading(false);
 		}

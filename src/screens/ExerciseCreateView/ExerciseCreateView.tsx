@@ -2,7 +2,7 @@ import { useLayoutEffect, useState } from 'react';
 import { useNavigation, useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import {
 	ExerciseCreateFormData,
 	exerciseCreateFormSchema
@@ -19,6 +19,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getMuscles } from '@/modules/exercise/services/muscle';
 import { usePickVideo } from '@/hooks';
 import { postExercise } from '@/modules/exercise/services/exercise';
+import { setFormError } from '@/utils';
 
 export const ExerciseCreateView = () => {
 	const router = useRouter();
@@ -34,7 +35,6 @@ export const ExerciseCreateView = () => {
 		clearErrors,
 		setValue,
 		watch,
-
 		formState: { errors }
 	} = useForm<ExerciseCreateFormData>({
 		resolver: zodResolver(exerciseCreateFormSchema),
@@ -144,11 +144,8 @@ export const ExerciseCreateView = () => {
 			});
 
 			router.back();
-		} catch {
-			setError('root', {
-				type: 'custom',
-				message: 'Something went wrong while creating the exercise'
-			});
+		} catch (error) {
+			setFormError(setError, error);
 		} finally {
 			setLoading(false);
 		}
@@ -167,7 +164,7 @@ export const ExerciseCreateView = () => {
 				/>
 			)
 		});
-	}, []);
+	}, [loading]);
 
 	return (
 		<View className="m-6">
@@ -185,7 +182,6 @@ export const ExerciseCreateView = () => {
 				name="title"
 				placeholder="Enter Exercise Name *"
 				error={errors.title}
-				disabled={loading}
 				variant="line"
 			/>
 
@@ -220,6 +216,10 @@ export const ExerciseCreateView = () => {
 			<ExerciseInstructions control={control} error={errors.instruction} />
 
 			<Separator />
+
+			{errors.root && (
+				<Text className="text-red-500 mt-2">{errors.root.message}</Text>
+			)}
 
 			<BottomSheetSelectList
 				title="Equipments"

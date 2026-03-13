@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { StorageAdapter } from '@/adapters/storage-adapter';
+import { parseAxiosError } from '@/utils';
 
 const axiosClient = axios.create({
 	baseURL: process.env.EXPO_PUBLIC_API_URL,
@@ -9,14 +10,22 @@ const axiosClient = axios.create({
 	timeout: 10000
 });
 
-axiosClient.interceptors.request.use(async (config) => {
-	const token = await StorageAdapter.getItem('token');
+axiosClient.interceptors.request.use(
+	async (config) => {
+		const token = await StorageAdapter.getItem('token');
 
-	if (token) {
-		config.headers.Authorization = `Bearer ${token}`;
-	}
+		if (token) {
+			config.headers.Authorization = `Bearer ${token}`;
+		}
 
-	return config;
-});
+		return config;
+	},
+	(error) => Promise.reject(error)
+);
+
+axiosClient.interceptors.response.use(
+	(response) => response,
+	(error) => Promise.reject(parseAxiosError(error))
+);
 
 export default axiosClient;

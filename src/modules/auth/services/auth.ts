@@ -12,8 +12,7 @@ export const authLogin = async (email: string, password: string) => {
 
 		return data;
 	} catch (error) {
-		console.log({ error });
-		throw new Error(JSON.stringify(error.response.data));
+		throw error;
 	}
 };
 
@@ -31,7 +30,7 @@ export const authRegister = async (
 
 		return data;
 	} catch (error) {
-		throw new Error(JSON.stringify(error.response.data));
+		throw error;
 	}
 };
 

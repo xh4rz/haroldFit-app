@@ -1,5 +1,4 @@
 import axiosClient from '@/api/axiosClient';
-
 import { Exercise } from '@/infrastructure/interfaces';
 
 export const postExercise = async (formData: FormData) => {
@@ -15,7 +14,7 @@ export const postExercise = async (formData: FormData) => {
 		);
 
 		return data;
-	} catch {
-		throw new Error('error post exercise');
+	} catch (error) {
+		throw error;
 	}
 };

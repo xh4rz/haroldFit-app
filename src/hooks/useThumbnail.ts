@@ -11,7 +11,7 @@ export const useThumbnail = (videoUrl: string) => {
 				const { uri } = await VideoThumbnails.getThumbnailAsync(videoUrl);
 				if (isMounted) setThumbnail(uri);
 			} catch (e) {
-				console.warn(e);
+				console.error(e);
 			}
 		};
 
