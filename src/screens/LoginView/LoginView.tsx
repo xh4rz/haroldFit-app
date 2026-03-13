@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { Link } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { z } from 'zod';
 import { loginFormSchema } from '@/modules/auth/validation/loginFormSchema';
 import { useAuthStore } from '@/modules/auth/store/useAuthStore';
-import { Button, Input } from '@/components/atoms';
+import { Button, Input, Text } from '@/components/atoms';
 import { SignInIcon } from 'phosphor-react-native';
 
 type LoginFormData = z.infer<typeof loginFormSchema>;
@@ -108,7 +108,7 @@ export const LoginView = () => {
 				loading={loading}
 			/>
 
-			<Text className={`mt-5 text-center text-primary-theme`}>
+			<Text className="mt-5 text-center">
 				Don&apos;t have an account?{' '}
 				<Link href="/auth/signup" className="font-bold text-secondary">
 					Sign Up
