@@ -1,10 +1,10 @@
-import { ScrollViewLayout } from '@/components/templates';
+import { KeyboardScrollViewLayout } from '@/components/templates';
 import { ExerciseCreateView } from '@/screens/ExerciseCreateView';
 
 export default function ExerciseCreateScreen() {
 	return (
-		<ScrollViewLayout paddingBottom={20} scrollToEnd>
+		<KeyboardScrollViewLayout paddingBottom={20} scrollToEnd>
 			<ExerciseCreateView />
-		</ScrollViewLayout>
+		</KeyboardScrollViewLayout>
 	);
 }

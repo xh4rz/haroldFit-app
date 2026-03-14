@@ -31,9 +31,8 @@ export const KeyboardContextProvider = ({ children }: Props) => {
 		<KeyboardContext.Provider value={contextValue}>
 			<KeyboardProvider>
 				<KeyboardAvoidingView
-					behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+					behavior={Platform.OS === 'ios' ? 'padding' : undefined}
 					style={{ flex: 1 }}
-					keyboardVerticalOffset={0}
 					enabled={enabledKeyboardAvoiding}
 				>
 					{children}
