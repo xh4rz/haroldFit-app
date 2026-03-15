@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Separator } from '@/components/atoms';
 import { SelectListItem } from '@/components/molecules';
-import { BottomSheetModalList } from '../BottomSheetModalList';
-import { Keyboard } from 'react-native';
+import { BottomSheetModal } from '../BottomSheetModal';
 
 type BaseSelectItem = {
 	id: number;
@@ -21,6 +20,7 @@ type BottomSheetSelectListProps<T extends BaseSelectItem> = {
 	onChange: (ids: number[]) => void;
 	imageScale?: number;
 	multiple?: boolean;
+	snapPoints?: string[] | number[];
 };
 
 export const BottomSheetSelectList = <T extends BaseSelectItem>({
@@ -31,7 +31,8 @@ export const BottomSheetSelectList = <T extends BaseSelectItem>({
 	selectedIds,
 	onChange,
 	imageScale = 1,
-	multiple = false
+	multiple = false,
+	snapPoints
 }: BottomSheetSelectListProps<T>) => {
 	const insets = useSafeAreaInsets();
 
@@ -49,16 +50,14 @@ export const BottomSheetSelectList = <T extends BaseSelectItem>({
 		onChange(newIds);
 	};
 
-	useEffect(() => {
-		if (show) {
-			const timeout = setTimeout(() => {
-				Keyboard.dismiss();
-			}, 300);
-			return () => clearTimeout(timeout);
-		}
-	}, [show]);
 	return (
-		<BottomSheetModalList title={title} show={show} setShow={setShow}>
+		<BottomSheetModal
+			title={title}
+			show={show}
+			setShow={setShow}
+			mode="list"
+			snapPoints={snapPoints}
+		>
 			<BottomSheetFlatList
 				data={data}
 				keyExtractor={(item: T) => item.id.toString()}
@@ -76,6 +75,6 @@ export const BottomSheetSelectList = <T extends BaseSelectItem>({
 					paddingBottom: insets.bottom + 20
 				}}
 			/>
-		</BottomSheetModalList>
+		</BottomSheetModal>
 	);
 };

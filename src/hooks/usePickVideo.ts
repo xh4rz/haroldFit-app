@@ -3,7 +3,8 @@ import { Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
 export const usePickVideo = (
-	onPicked?: (video: ImagePicker.ImagePickerAsset) => void
+	onPicked?: (video: ImagePicker.ImagePickerAsset) => void,
+	onRemoved?: () => void
 ) => {
 	const [video, setVideo] = useState<ImagePicker.ImagePickerAsset | null>(null);
 	const [loadingVideo, setLoadingVideo] = useState(false);
@@ -27,7 +28,7 @@ export const usePickVideo = (
 		return true;
 	};
 
-	const pickVideo = async () => {
+	const selectVideo = async () => {
 		try {
 			const allowed = await requestPermission('library');
 			if (!allowed) return;
@@ -79,26 +80,16 @@ export const usePickVideo = (
 		}
 	};
 
-	const openPicker = () => {
-		Alert.alert('Select video', 'What would you like to do?', [
-			{
-				text: 'Record video',
-				onPress: captureVideo
-			},
-			{
-				text: 'Choose from gallery',
-				onPress: pickVideo
-			},
-			{
-				text: 'Cancel',
-				style: 'cancel'
-			}
-		]);
+	const removeVideo = () => {
+		setVideo(null);
+		onRemoved?.();
 	};
 
 	return {
 		video,
 		loadingVideo,
-		openPicker
+		selectVideo,
+		captureVideo,
+		removeVideo
 	};
 };

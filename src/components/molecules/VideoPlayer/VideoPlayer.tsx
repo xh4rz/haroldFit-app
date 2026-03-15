@@ -45,10 +45,10 @@ export const VideoPlayer = ({
 		<View className="w-full h-full">
 			<Video player={player} contentFit={contentFit} />
 
-			<View className="absolute top-5 right-10">
+			<View className="absolute top-5 right-5">
 				<IconButton
-					size="sm"
-					variant="secondary"
+					size="xs"
+					variant="outline"
 					icon={isPlaying ? <PauseIcon /> : <PlayIcon />}
 					onPress={handleTogglePlay}
 				/>

@@ -2,36 +2,31 @@ import { ReactElement, cloneElement } from 'react';
 import {
 	ActivityIndicator,
 	TouchableOpacity,
-	TouchableOpacityProps,
-	View
+	TouchableOpacityProps
 } from 'react-native';
 import { IconProps } from 'phosphor-react-native';
 
 interface IconButtonProps extends TouchableOpacityProps {
 	icon: ReactElement<IconProps>;
 	variant?: 'primary' | 'secondary' | 'outline';
-	size?: 'sm' | 'md' | 'lg' | 'xl';
+	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 	loading?: boolean;
 }
 
-const variants = {
-	primary: 'bg-primary',
-	secondary: 'bg-secondary',
-	outline: 'bg-transparent'
-};
-
 const sizes = {
+	xs: 'w-6 h-6',
 	sm: 'w-8 h-8',
 	md: 'w-10 h-10',
 	lg: 'w-12 h-12',
 	xl: 'w-14 h-14'
 };
 
-const sizesIcon = {
-	sm: 20,
-	md: 24,
-	lg: 28,
-	xl: 32
+const sizesIcon = { xs: 14, sm: 18, md: 24, lg: 28, xl: 32 };
+
+const variantsColor = {
+	primary: 'bg-primary',
+	secondary: 'bg-secondary',
+	outline: 'bg-black/40'
 };
 
 export const IconButton = ({
@@ -43,15 +38,20 @@ export const IconButton = ({
 	disabled,
 	...rest
 }: IconButtonProps) => {
+	const iconSize = sizesIcon[size];
+	const buttonSizeClass = sizes[size];
+	const buttonVariantClass = variantsColor[variant];
+	const buttonOpacityClass = disabled || loading ? 'opacity-60' : 'opacity-100';
+
 	return (
 		<TouchableOpacity
 			activeOpacity={0.5}
 			className={`
 				items-center justify-center rounded-full
-				${sizes[size]}
-				${variants[variant]}
-			    ${disabled || loading ? 'opacity-60' : 'opacity-100'}
-				${className ?? ''}
+			 	${buttonSizeClass}
+        		${buttonVariantClass}
+        		${buttonOpacityClass}
+        		${className ?? ''}
 			`}
 			disabled={disabled || loading}
 			{...rest}
@@ -59,16 +59,10 @@ export const IconButton = ({
 			{loading ? (
 				<ActivityIndicator color="white" />
 			) : (
-				<View>
-					{cloneElement(icon, {
-						size: icon.props.size ?? sizesIcon[size],
-						color: icon.props.color
-						// color:
-						// 	(icon.props.color ?? ['primary', 'secondary'].includes(variant))
-						// 		? 'white'
-						// 		: 'black'
-					})}
-				</View>
+				cloneElement(icon, {
+					size: icon.props.size ?? iconSize,
+					color: icon.props.color ?? 'white'
+				})
 			)}
 		</TouchableOpacity>
 	);

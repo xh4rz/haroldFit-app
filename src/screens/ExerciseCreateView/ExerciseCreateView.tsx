@@ -1,25 +1,29 @@
 import { useLayoutEffect, useState } from 'react';
 import { useNavigation, useRouter } from 'expo-router';
+import { View } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Text, View } from 'react-native';
 import {
 	ExerciseCreateFormData,
 	exerciseCreateFormSchema
 } from '@/modules/exercise/exerciseCreateFormSchema';
-import { Button, Input, Separator } from '@/components/atoms';
+import { Button, Input, Separator, Text } from '@/components/atoms';
 import {
 	ExerciseInstructions,
 	ExerciseVideoUpload,
 	SelectField
 } from '@/components/molecules';
-import { BottomSheetSelectList } from '@/components/organisms';
+import {
+	BottomSheetSelectList,
+	BottomSheetVideoOptions
+} from '@/components/organisms';
 import { getEquipments } from '@/modules/exercise/services/equipment';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getMuscles } from '@/modules/exercise/services/muscle';
 import { usePickVideo } from '@/hooks';
 import { postExercise } from '@/modules/exercise/services/exercise';
 import { setFormError } from '@/utils';
+import * as ImagePicker from 'expo-image-picker';
 
 export const ExerciseCreateView = () => {
 	const router = useRouter();
@@ -50,6 +54,8 @@ export const ExerciseCreateView = () => {
 	});
 
 	const [loading, setLoading] = useState(false);
+
+	const [showModalOptionsVideo, setShowModalOptionsVideo] = useState(false);
 
 	const [showModalEquipment, setShowModalEquipment] = useState(false);
 
@@ -104,10 +110,23 @@ export const ExerciseCreateView = () => {
 
 	const primaryMuscleError = errors.primaryMuscleId?.message;
 
-	const { openPicker, video, loadingVideo } = usePickVideo((video) => {
-		setValue('file', video, { shouldValidate: true });
-		clearErrors('file');
-	});
+	const emptyVideo: ImagePicker.ImagePickerAsset = {
+		uri: '',
+		width: 0,
+		height: 0
+	};
+
+	const { video, loadingVideo, selectVideo, captureVideo, removeVideo } =
+		usePickVideo(
+			(video) => {
+				setValue('file', video, { shouldValidate: true });
+				clearErrors('file');
+			},
+			() => {
+				setValue('file', emptyVideo, { shouldValidate: true });
+				clearErrors('file');
+			}
+		);
 
 	const onSaveExercise = async (data: ExerciseCreateFormData) => {
 		setLoading(true);
@@ -170,7 +189,7 @@ export const ExerciseCreateView = () => {
 		<View className="m-6">
 			<ExerciseVideoUpload
 				videoUri={video?.uri ?? ''}
-				openPicker={openPicker}
+				openPicker={() => setShowModalOptionsVideo(true)}
 				loading={loadingVideo}
 				error={errors.file}
 			/>
@@ -250,6 +269,15 @@ export const ExerciseCreateView = () => {
 				selectedIds={secondaryMuscleIds ?? []}
 				onChange={handleChangeSelectMultiple('secondaryMuscleIds')}
 				imageScale={1.2}
+			/>
+
+			<BottomSheetVideoOptions
+				show={showModalOptionsVideo}
+				setShow={setShowModalOptionsVideo}
+				disabledVideo={!watch('file')?.uri}
+				selectVideo={selectVideo}
+				captureVideo={captureVideo}
+				removeVideo={removeVideo}
 			/>
 		</View>
 	);

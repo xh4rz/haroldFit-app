@@ -1,4 +1,5 @@
 export * from './ExerciseList';
 export * from './ExerciseDetail';
-export * from './BottomSheetModalList';
+export * from './BottomSheetModal';
 export * from './BottomSheetSelectList';
+export * from './BottomSheetVideoOptions';
