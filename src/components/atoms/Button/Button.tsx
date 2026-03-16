@@ -10,7 +10,7 @@ import { IconProps } from 'phosphor-react-native';
 
 interface ButtonProps extends TouchableOpacityProps {
 	title: string;
-	variant?: 'primary' | 'secondary' | 'outline';
+	variant?: 'primary' | 'secondary' | 'outline' | 'error';
 	size?: 'sm' | 'md' | 'lg' | 'xl';
 	loading?: boolean;
 	iconLeft?: ReactElement<IconProps>;
@@ -22,13 +22,15 @@ interface ButtonProps extends TouchableOpacityProps {
 const variants = {
 	primary: 'bg-primary',
 	secondary: 'bg-secondary',
-	outline: 'bg-transparent border border-primary'
+	outline: 'bg-transparent border border-primary',
+	error: 'bg-error'
 };
 
 const textVariants = {
 	primary: 'text-white',
 	secondary: 'text-white',
-	outline: 'text-primary'
+	outline: 'text-primary',
+	error: 'text-white'
 };
 
 const sizes = {

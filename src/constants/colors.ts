@@ -2,6 +2,7 @@ export const colors = {
 	// Colores principales
 	primary: '#ffa500',
 	secondary: '#9333ea',
+	error: '#ef4444',
 
 	// Colores de tema claro
 	light: {

@@ -16,6 +16,8 @@ module.exports = {
 				primary: colors.primary,
 				secondary: colors.secondary,
 
+				error: colors.error,
+
 				'bg-light': colors.light.background,
 				'bg-dark': colors.dark.background,
 

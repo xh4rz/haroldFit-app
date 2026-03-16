@@ -1,29 +1,22 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactNode } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 interface QueryProviderProps {
 	children: ReactNode;
 }
 
-// Crear el cliente de React Query con configuración personalizada
-const reactQueryClient = new QueryClient({
+export const reactQueryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
-			// Tiempo que los datos se consideran "frescos"
-			staleTime: 5 * 60 * 1000, // 5 minutos
-
-			// Tiempo que los datos se mantienen en caché
-			gcTime: 10 * 60 * 1000, // 10 minutos
-
-			// Número de reintentos en caso de error
-			retry: 2,
-
-			// Configuraciones de refetch
-			refetchOnWindowFocus: false,
-			refetchOnReconnect: true
+			staleTime: 5 * 60 * 1000, // datos frescos por 5 min
+			gcTime: 10 * 60 * 1000, // cache se elimina en 10 min
+			retry: 1, // 1 reintento si falla
+			refetchOnWindowFocus: false, // no refetch al volver a la app
+			refetchOnReconnect: true, // refetch si vuelve internet
+			refetchOnMount: false // no refetch al montar componente
 		},
 		mutations: {
-			retry: 1
+			retry: 0 // no reintentar mutations
 		}
 	}
 });
@@ -35,6 +28,3 @@ export function ReactQueryContextProvider({ children }: QueryProviderProps) {
 		</QueryClientProvider>
 	);
 }
-
-// Exportar el cliente por si lo necesitas
-export { reactQueryClient };

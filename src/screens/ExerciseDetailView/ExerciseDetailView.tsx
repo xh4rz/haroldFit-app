@@ -1,14 +1,33 @@
-import React from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { View } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
-import { useQuery } from '@tanstack/react-query';
-import { Text } from '@/components/atoms';
-import { getExerciseById } from '@/modules/exercise/services/exercise';
-import { ExerciseDetail } from '@/components/organisms';
+import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { IconButton, Text } from '@/components/atoms';
 import { LoadingView } from '@/components/molecules';
+import {
+	BottomSheetExerciseOptions,
+	DeleteExerciseModal,
+	ExerciseDetail
+} from '@/components/organisms';
+import {
+	deleteExerciseById,
+	getExerciseById
+} from '@/modules/exercise/services/exercise';
+import { DotsThreeOutlineVerticalIcon } from 'phosphor-react-native';
+import { colors } from '@/constants/colors';
 
 export const ExerciseDetailView = () => {
 	const { id } = useLocalSearchParams<{ id: string; title: string }>();
+
+	const router = useRouter();
+
+	const navigation = useNavigation();
+
+	const queryClient = useQueryClient();
+
+	const [showModalOptions, setShowModalOptions] = useState(false);
+
+	const [showModalDeleteExercise, setShowModalDeleteExercise] = useState(false);
 
 	const {
 		data: exercise,
@@ -18,6 +37,35 @@ export const ExerciseDetailView = () => {
 		queryKey: ['exercise', id],
 		queryFn: () => getExerciseById(id)
 	});
+
+	const handleEditExercise = () => {
+		// todo: hacer router para el edit
+	};
+
+	const handleDeleteExercise = () => {
+		setShowModalDeleteExercise(true);
+	};
+
+	const { mutate: deleteExercise, isPending: loadingDelete } = useMutation({
+		mutationFn: () => deleteExerciseById(id),
+		onSuccess: async () => {
+			await queryClient.invalidateQueries({
+				queryKey: ['exercises']
+			});
+			router.back();
+		}
+	});
+
+	useLayoutEffect(() => {
+		navigation.setOptions({
+			headerRight: () => (
+				<IconButton
+					icon={<DotsThreeOutlineVerticalIcon color={colors.secondary} />}
+					onPress={() => setShowModalOptions(true)}
+				/>
+			)
+		});
+	}, []);
 
 	if (isPending) {
 		return <LoadingView titleLoading="details exercise" />;
@@ -34,6 +82,21 @@ export const ExerciseDetailView = () => {
 	return (
 		<View className="flex-1">
 			<ExerciseDetail exercise={exercise} />
+
+			<BottomSheetExerciseOptions
+				show={showModalOptions}
+				setShow={setShowModalOptions}
+				onEditExercise={handleEditExercise}
+				onDeleteExercise={handleDeleteExercise}
+			/>
+
+			<DeleteExerciseModal
+				exerciseTitle={exercise.title}
+				visible={showModalDeleteExercise}
+				setVisible={setShowModalDeleteExercise}
+				onDelete={deleteExercise}
+				loading={loadingDelete}
+			/>
 		</View>
 	);
 };

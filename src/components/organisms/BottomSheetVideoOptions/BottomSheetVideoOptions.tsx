@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { BottomSheetModal } from '../BottomSheetModal';
-import { AntDesign } from '@expo/vector-icons';
 import {
+	CaretRightIcon,
 	FileVideoIcon,
 	ReceiptXIcon,
 	VideoCameraIcon
@@ -48,24 +48,27 @@ export const BottomSheetVideoOptions = ({
 	return (
 		<BottomSheetModal title="Add Video" show={show} setShow={setShow}>
 			<View className="m-6">
-				{sections.map((i, index) => (
-					<TouchableOpacity
-						key={index}
-						className="flex-row gap-6 bg-zinc-800 p-4 items-center"
-						activeOpacity={0.3}
-						onPress={() => {
-							if (!i.disabled) {
-								i.onPress();
-								setShow(false);
-							}
-						}}
-						style={{ opacity: i.disabled ? 0.4 : 1 }}
-					>
-						{i.icon}
-						<Text className="text-white font-medium flex-1">{i.title}</Text>
-						<AntDesign name="right" size={14} color="white" />
-					</TouchableOpacity>
-				))}
+				{sections.map((i, index) => {
+					const isDisabled = i.disabled;
+					return (
+						<TouchableOpacity
+							key={index}
+							className={`flex-row gap-6 p-4 items-center ${isDisabled ? 'opacity-40' : 'opacity-100'}`}
+							activeOpacity={0.3}
+							onPress={() => {
+								if (!isDisabled) {
+									i.onPress();
+									setShow(false);
+								}
+							}}
+							disabled={isDisabled}
+						>
+							{i.icon}
+							<Text className="text-white font-medium flex-1">{i.title}</Text>
+							<CaretRightIcon size={14} color="white" />
+						</TouchableOpacity>
+					);
+				})}
 			</View>
 		</BottomSheetModal>
 	);

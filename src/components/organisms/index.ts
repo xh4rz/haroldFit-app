@@ -3,3 +3,5 @@ export * from './ExerciseDetail';
 export * from './BottomSheetModal';
 export * from './BottomSheetSelectList';
 export * from './BottomSheetVideoOptions';
+export * from './BottomSheetExerciseOptions';
+export * from './DeleteExerciseModal';
