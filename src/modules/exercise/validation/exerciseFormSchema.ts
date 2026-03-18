@@ -1,7 +1,6 @@
 import { z } from 'zod';
-import * as ImagePicker from 'expo-image-picker';
 
-export const exerciseCreateFormSchema = z.object({
+export const exerciseFormSchema = z.object({
 	title: z
 		.string()
 		.min(1, { message: 'Exercise name is required' })
@@ -36,16 +35,20 @@ export const exerciseCreateFormSchema = z.object({
 		.min(1, { message: 'At least one instruction is required' }),
 
 	file: z
-		.custom<ImagePicker.ImagePickerAsset>()
-		.refine((file) => !!file, {
-			message: 'Video is required'
+		.object({
+			uri: z.string().min(1, { message: 'Video is required' }),
+			fileName: z.string(),
+			mimeType: z.string(),
+			width: z.number(),
+			height: z.number(),
+			fileSize: z.number().optional()
 		})
-		.refine((file) => file?.mimeType?.startsWith('video/'), {
+		.refine((file) => file.mimeType.startsWith('video/'), {
 			message: 'File must be a video'
 		})
-		.refine((file) => (file?.fileSize ?? 0) <= 2 * 1024 * 1024, {
+		.refine((file) => (file.fileSize ?? 0) <= 2 * 1024 * 1024, {
 			message: 'Video must be smaller than 2MB'
 		})
 });
 
-export type ExerciseCreateFormData = z.infer<typeof exerciseCreateFormSchema>;
+export type ExerciseFormData = z.infer<typeof exerciseFormSchema>;

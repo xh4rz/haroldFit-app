@@ -39,7 +39,10 @@ export const ExerciseDetailView = () => {
 	});
 
 	const handleEditExercise = () => {
-		// todo: hacer router para el edit
+		router.push({
+			pathname: '/exercise/edit/[id]',
+			params: { id }
+		});
 	};
 
 	const handleDeleteExercise = () => {
@@ -58,6 +61,7 @@ export const ExerciseDetailView = () => {
 
 	useLayoutEffect(() => {
 		navigation.setOptions({
+			title: exercise?.title ?? 'Exercise',
 			headerRight: () => (
 				<IconButton
 					icon={<DotsThreeOutlineVerticalIcon color={colors.secondary} />}
@@ -65,7 +69,7 @@ export const ExerciseDetailView = () => {
 				/>
 			)
 		});
-	}, []);
+	}, [exercise?.title]);
 
 	if (isPending) {
 		return <LoadingView titleLoading="details exercise" />;

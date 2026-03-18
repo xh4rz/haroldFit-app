@@ -3,14 +3,14 @@ import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
 import { FieldErrors } from 'react-hook-form';
 import { VideoPlayer } from '../VideoPlayer';
 import { UploadSimpleIcon } from 'phosphor-react-native';
-import { ExerciseCreateFormData } from '@/modules/exercise/exerciseCreateFormSchema';
+import { ExerciseFormData } from '@/modules/exercise/validation/exerciseFormSchema';
 import { Text } from '@/components/atoms';
 import { colors } from '@/constants/colors';
 
 interface ExerciseVideoUploadProps {
 	videoUri: string;
 	openPicker: () => void;
-	error: FieldErrors<ExerciseCreateFormData>['file'];
+	error: FieldErrors<ExerciseFormData>['file'];
 	loading: boolean;
 }
 

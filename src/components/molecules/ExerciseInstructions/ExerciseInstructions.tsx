@@ -9,11 +9,11 @@ import {
 import { Button, IconButton, Text } from '@/components/atoms';
 import { PlusIcon, XIcon } from 'phosphor-react-native';
 import { colors } from '@/constants/colors';
-import { ExerciseCreateFormData } from '@/modules/exercise/exerciseCreateFormSchema';
+import { ExerciseFormData } from '@/modules/exercise/validation/exerciseFormSchema';
 
 interface ExerciseInstructionsProps {
-	control: Control<ExerciseCreateFormData>;
-	error: FieldErrors<ExerciseCreateFormData>['instruction'];
+	control: Control<ExerciseFormData>;
+	error: FieldErrors<ExerciseFormData>['instruction'];
 }
 
 export const ExerciseInstructions = ({
