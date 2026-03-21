@@ -33,14 +33,12 @@ export const Modal = ({
 				className="flex-1 justify-center items-center bg-black/60"
 				onPress={() => setVisible(false)}
 			>
-				<Pressable className="bg-zinc-800 rounded-2xl p-6 w-[85%] max-w-sm">
+				<Pressable className="bg-zinc-800 rounded-2xl p-6 max-w-lg">
 					<Text className="text-lg font-bold text-center mb-2">{title}</Text>
-
 					<Text className="text-sm text-center mb-6">
 						{description}{' '}
 						{highlight && <Text className="font-bold">{highlight}</Text>}
 					</Text>
-
 					{children}
 				</Pressable>
 			</Pressable>

@@ -10,6 +10,7 @@ import { Button, IconButton, Text } from '@/components/atoms';
 import { PlusIcon, XIcon } from 'phosphor-react-native';
 import { colors } from '@/constants/colors';
 import { ExerciseFormData } from '@/modules/exercise/validation/exerciseFormSchema';
+import { useKeyboard } from '@/hooks';
 
 interface ExerciseInstructionsProps {
 	control: Control<ExerciseFormData>;
@@ -27,6 +28,9 @@ export const ExerciseInstructions = ({
 
 	const errorsMessage = error?.message || error?.root?.message;
 
+	const { registerInput, openKeyboard, removeInput, closeKeyboard } =
+		useKeyboard();
+
 	return (
 		<View className="gap-3 my-5">
 			<View className="flex flex-row justify-between gap-2">
@@ -38,7 +42,16 @@ export const ExerciseInstructions = ({
 					iconLeft={<PlusIcon color={colors.primary} />}
 					className="py-0.5 px-2"
 					fullWidth={false}
-					onPress={() => append({ text: '' })}
+					onPress={() => {
+						const newIndex = fields.length;
+
+						append({ text: '' });
+
+						setTimeout(() => {
+							closeKeyboard();
+							openKeyboard(newIndex);
+						}, 150);
+					}}
 				/>
 			</View>
 
@@ -52,8 +65,12 @@ export const ExerciseInstructions = ({
 							<Controller
 								control={control}
 								name={`instruction.${index}.text`}
-								render={({ field: { onChange, value } }) => (
+								render={({ field: { onChange, value, ref } }) => (
 									<TextInput
+										ref={(r) => {
+											ref(r);
+											registerInput(index, r);
+										}}
 										value={value}
 										onChangeText={onChange}
 										placeholder="Write instruction..."
@@ -76,7 +93,10 @@ export const ExerciseInstructions = ({
 							variant="outline"
 							size="sm"
 							icon={<XIcon color={colors.secondary} />}
-							onPress={() => remove(index)}
+							onPress={() => {
+								remove(index);
+								removeInput(index);
+							}}
 							className="mr-1"
 						/>
 					</View>

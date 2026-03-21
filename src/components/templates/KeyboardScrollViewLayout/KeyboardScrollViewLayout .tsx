@@ -1,30 +1,20 @@
-import React, { ReactNode, useRef } from 'react';
+import React, { ReactNode } from 'react';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 interface ScrollViewLayoutProps {
 	children: ReactNode;
-	paddingBottom?: number;
-	scrollToEnd?: boolean;
+	bottomOffset?: number;
 }
 
 export const KeyboardScrollViewLayout = ({
 	children,
-	paddingBottom = 0,
-	scrollToEnd = false
+	bottomOffset = 80
 }: ScrollViewLayoutProps) => {
-	const scrollViewRef =
-		useRef<React.ComponentRef<typeof KeyboardAwareScrollView>>(null);
-
 	return (
 		<KeyboardAwareScrollView
-			ref={scrollViewRef}
-			onContentSizeChange={() => {
-				if (scrollToEnd) {
-					scrollViewRef.current?.scrollToEnd({ animated: true });
-				}
-			}}
+			bottomOffset={bottomOffset}
 			keyboardShouldPersistTaps="handled"
-			contentContainerStyle={{ flexGrow: 1, paddingBottom }}
+			contentContainerStyle={{ flexGrow: 1 }}
 		>
 			{children}
 		</KeyboardAwareScrollView>

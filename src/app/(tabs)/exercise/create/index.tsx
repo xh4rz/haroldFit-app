@@ -3,7 +3,7 @@ import { ExerciseCreateView } from '@/screens/ExerciseCreateView';
 
 export default function ExerciseCreateScreen() {
 	return (
-		<KeyboardScrollViewLayout paddingBottom={20} scrollToEnd>
+		<KeyboardScrollViewLayout>
 			<ExerciseCreateView />
 		</KeyboardScrollViewLayout>
 	);

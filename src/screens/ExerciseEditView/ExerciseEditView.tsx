@@ -45,7 +45,7 @@ export const ExerciseEditView = () => {
 	}
 
 	return (
-		<KeyboardScrollViewLayout paddingBottom={20} scrollToEnd>
+		<KeyboardScrollViewLayout>
 			<ExerciseForm mode="edit" defaultValues={mapExerciseToForm(exercise)} />
 		</KeyboardScrollViewLayout>
 	);

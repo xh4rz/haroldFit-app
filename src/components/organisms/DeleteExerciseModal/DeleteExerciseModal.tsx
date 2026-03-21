@@ -27,15 +27,12 @@ export const DeleteExerciseModal = ({
 		>
 			<View className="flex gap-3">
 				<Button
-					size="sm"
 					title="Delete Exercise"
 					variant="error"
 					onPress={onDelete}
 					loading={loading}
 				/>
-
 				<Button
-					size="sm"
 					title="Cancel"
 					variant="outline"
 					onPress={() => setVisible(false)}

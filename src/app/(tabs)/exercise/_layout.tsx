@@ -19,7 +19,7 @@ export default function ExerciseLayout() {
 				headerTitleStyle: {
 					color: 'white'
 				},
-				animation: 'slide_from_right',
+				animation: 'slide_from_left',
 				contentStyle: {
 					backgroundColor: theme.background
 				}
@@ -53,6 +53,14 @@ export default function ExerciseLayout() {
 				options={{
 					headerShown: true,
 					title: 'Create Exercise'
+				}}
+			/>
+
+			<Stack.Screen
+				name="edit/[id]"
+				options={{
+					headerShown: true,
+					title: 'Edit Exercise'
 				}}
 			/>
 		</Stack>

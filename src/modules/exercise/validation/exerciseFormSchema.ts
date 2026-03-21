@@ -36,12 +36,15 @@ export const exerciseFormSchema = z.object({
 
 	file: z
 		.object({
-			uri: z.string().min(1, { message: 'Video is required' }),
+			uri: z.string(),
 			fileName: z.string(),
 			mimeType: z.string(),
 			width: z.number(),
 			height: z.number(),
 			fileSize: z.number().optional()
+		})
+		.refine((file) => !!file.uri, {
+			message: 'Video is required'
 		})
 		.refine((file) => file.mimeType.startsWith('video/'), {
 			message: 'File must be a video'
