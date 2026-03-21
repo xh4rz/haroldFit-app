@@ -9,24 +9,21 @@ type ExerciseInfoProps = {
 
 export const ExerciseInfo = ({ exercise }: ExerciseInfoProps) => {
 	return (
-		<View className="flex gap-4">
-			<Text>{exercise.title}</Text>
-			<Text>Primary: {exercise.primaryMuscle.name}</Text>
+		<View>
+			<Text className="text-lg font-bold mb-1">{exercise.title}</Text>
+			<Text>
+				Primary:{' '}
+				<Text className="text-white/60">{exercise.primaryMuscle.name}</Text>
+			</Text>
 			{exercise.secondaryMuscles?.length !== 0 && (
 				<Text>
-					Secondary: {exercise.secondaryMuscles?.map((e) => e.name).join(', ')}
+					Secondary:{' '}
+					<Text className="text-white/60">
+						{' '}
+						{exercise.secondaryMuscles?.map((e) => e.name).join(', ')}
+					</Text>
 				</Text>
 			)}
-			<View>
-				<Text>Instructions</Text>
-				<View>
-					{exercise.instruction.map((item, index) => (
-						<Text key={index}>
-							{index + 1}. {item}
-						</Text>
-					))}
-				</View>
-			</View>
 		</View>
 	);
 };

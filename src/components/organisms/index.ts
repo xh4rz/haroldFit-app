@@ -6,3 +6,4 @@ export * from './BottomSheetVideoOptions';
 export * from './BottomSheetExerciseOptions';
 export * from './DeleteExerciseModal';
 export * from './ExerciseForm';
+export * from './TabView';

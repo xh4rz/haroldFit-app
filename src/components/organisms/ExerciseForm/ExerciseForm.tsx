@@ -9,14 +9,12 @@ import {
 } from '@/modules/exercise/validation/exerciseFormSchema';
 import { Button, Input, Separator, Text } from '@/components/atoms';
 import {
-	ExerciseInstructions,
+	ExerciseInputInstructions,
 	ExerciseVideoUpload,
 	SelectField
 } from '@/components/molecules';
-import {
-	BottomSheetSelectList,
-	BottomSheetVideoOptions
-} from '@/components/organisms';
+import { BottomSheetSelectList } from '../BottomSheetSelectList';
+import { BottomSheetVideoOptions } from '../BottomSheetVideoOptions';
 import { getEquipments } from '@/modules/exercise/services/equipment';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getMuscles } from '@/modules/exercise/services/muscle';
@@ -262,7 +260,7 @@ export const ExerciseForm = ({ defaultValues, mode }: Props) => {
 
 			<Separator />
 
-			<ExerciseInstructions control={control} error={errors.instruction} />
+			<ExerciseInputInstructions control={control} error={errors.instruction} />
 
 			<Separator />
 
