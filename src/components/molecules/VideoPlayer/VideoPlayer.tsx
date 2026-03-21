@@ -43,7 +43,9 @@ export const VideoPlayer = ({
 
 	return (
 		<View className="w-full h-full">
-			<Video player={player} contentFit={contentFit} />
+			<View pointerEvents="none" className="w-full h-full">
+				<Video player={player} contentFit={contentFit} />
+			</View>
 
 			<View className="absolute top-5 right-5">
 				<IconButton
